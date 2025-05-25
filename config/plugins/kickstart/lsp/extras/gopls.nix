@@ -20,11 +20,12 @@ in
         # NOTE: add options as I need
       };
 
-      treesitter.grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-        go
-        gomod
-        gosum
-      ];
+      treesitter.grammarPackages =
+        with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+          go
+          gomod
+          gosum
+        ];
     };
   };
 }

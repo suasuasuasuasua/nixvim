@@ -60,9 +60,10 @@ in
         };
       };
 
-      treesitter.grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-        nix
-      ];
+      treesitter.grammarPackages =
+        with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+          nix
+        ];
     };
   };
 }

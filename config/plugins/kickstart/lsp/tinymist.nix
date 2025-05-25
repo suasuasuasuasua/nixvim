@@ -35,9 +35,10 @@ in
         };
       };
 
-      treesitter.grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-        typst
-      ];
+      treesitter.grammarPackages =
+        with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+          typst
+        ];
     };
   };
 }

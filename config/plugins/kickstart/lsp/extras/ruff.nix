@@ -20,9 +20,10 @@ in
         # NOTE: add options as I need
       };
 
-      treesitter.grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-        python
-      ];
+      treesitter.grammarPackages =
+        with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+          python
+        ];
     };
   };
 }

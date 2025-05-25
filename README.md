@@ -16,4 +16,3 @@ To verify if the `nixvim` configuration is correct beforehand:
 ```nix
 nix flake check
 ```
-
