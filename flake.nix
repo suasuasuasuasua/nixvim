@@ -19,6 +19,11 @@
       flake-parts,
       ...
     }@inputs:
+    # TODO: move away from flake-parts
+    # I think it's super convenient, but I don't like the idea of tying myself
+    # to some nix framework that is still experimental. Ideally, I would just
+    # implement this all in native nix and flake module syntax. I am going with
+    # it now to move fast since it was included in the template
     flake-parts.lib.mkFlake { inherit inputs; } {
       systems = import systems;
 
