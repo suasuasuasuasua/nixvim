@@ -6,10 +6,10 @@
 }:
 let
   name = "just";
-  cfg = config.suasuasuasuasua.nixvim.lsp.${name};
+  cfg = config.nixvim.lsp.${name};
 in
 {
-  options.suasuasuasuasua.nixvim.lsp.${name} = {
+  options.nixvim.lsp.${name} = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;

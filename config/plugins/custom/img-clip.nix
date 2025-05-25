@@ -6,10 +6,10 @@
 }:
 let
   name = "img-clip";
-  cfg = config.suasuasuasuasua.nixvim.plugins.${name};
+  cfg = config.nixvim.plugins.${name};
 in
 {
-  options.suasuasuasuasua.nixvim.plugins.${name} = {
+  options.nixvim.plugins.${name} = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;

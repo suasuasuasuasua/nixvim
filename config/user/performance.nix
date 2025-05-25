@@ -1,6 +1,6 @@
 { lib, config, ... }:
 let
-  cfg = config.suasuasuasuasua.nixvim;
+  cfg = config.nixvim;
 in
 lib.mkIf cfg.enable {
   # Performance tweaks

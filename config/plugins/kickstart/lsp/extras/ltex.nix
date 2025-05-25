@@ -5,10 +5,10 @@
 }:
 let
   name = "ltex";
-  cfg = config.suasuasuasuasua.nixvim.lsp.${name};
+  cfg = config.nixvim.lsp.${name};
 in
 {
-  options.suasuasuasuasua.nixvim.lsp.${name} = {
+  options.nixvim.lsp.${name} = {
     enable = lib.mkEnableOption "Enable ${name} LSP for neovim";
   };
 

@@ -4,12 +4,12 @@
   ...
 }:
 let
-  cfg = config.suasuasuasuasua.nixvim;
+  cfg = config.nixvim;
 
   inherit (lib.types) bool enum;
 in
 {
-  options.suasuasuasuasua.nixvim = {
+  options.nixvim = {
     colorscheme = {
       enable = lib.mkOption {
         type = bool;

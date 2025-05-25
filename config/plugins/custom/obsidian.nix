@@ -10,7 +10,11 @@ let
 in
 {
   options.nixvim.plugins.${name} = {
-    enable = lib.mkEnableOption "Enable ${name} plugin for neovim";
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Enable ${name} plugin for neovim";
+    };
     workspaces = lib.mkOption {
       type =
         with lib.types;
@@ -37,7 +41,7 @@ in
     # https://github.com/epwalsh/obsidian.nvim
     plugins.obsidian = {
       enable = true;
-
+      
       settings = {
         notes_subdir = "01-fleeting";
 
@@ -118,10 +122,9 @@ in
           ];
         };
       };
-    };
+      };
 
-    # add the sources to blink
-    plugins.blink-cmp.settings.sources.default = [
+    plugins.blink-cmp.settings.sources = [
       "obsidian"
       "obsidian_new"
       "obsidian_tags"
@@ -130,7 +133,7 @@ in
     extraPackages =
       let
         inherit (lib) optionals;
-        inherit (pkgs.stdenv.hostPlatform) isDarwin isLinux;
+        inherit (pkgs.stdenv) isDarwin isLinux;
       in
       with pkgs;
       [ ripgrep ]
@@ -142,5 +145,5 @@ in
         wl-clipboard # wayland
         wsl-open # for wsl users
       ];
-  };
+    };
 }

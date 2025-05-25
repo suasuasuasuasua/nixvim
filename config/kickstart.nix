@@ -1,9 +1,9 @@
 { lib, config, ... }:
 let
-  cfg = config.suasuasuasuasua.nixvim;
+  cfg = config.nixvim;
 in
 {
-  options.suasuasuasuasua.nixvim = {
+  options.nixvim = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
