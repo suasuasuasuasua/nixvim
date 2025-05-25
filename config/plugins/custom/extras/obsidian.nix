@@ -36,9 +36,10 @@ in
   config = lib.mkIf cfg.enable {
     # https://github.com/epwalsh/obsidian.nvim
     plugins.obsidian = {
-      enable = true;
 
       settings = {
+        inherit (cfg) workspaces;
+
         notes_subdir = "01-fleeting";
 
         # see below for full list of options 👇
