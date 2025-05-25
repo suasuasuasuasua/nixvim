@@ -1,8 +1,8 @@
-# {
-#   config,
-#   lib,
-#   ...
-# }:
+{
+  config,
+  lib,
+  ...
+}:
 {
   # Useful plugin to show you pending keybinds.
   # https://nix-community.github.io/nixvim/plugins/which-key/index.html
@@ -23,9 +23,7 @@
       # one of “classic”, “modern”, “helix”
       preset = "modern";
       # check if we have a nerd font...
-      # TODO: figure out how to check config
-      # keys = lib.mkIf config.programs.nixvim.globals.have_nerd_font {
-      keys = {
+      keys = lib.mkIf config.globals.have_nerd_font {
         Up = "<Up> ";
         Down = "<Down> ";
         Left = "<Left> ";

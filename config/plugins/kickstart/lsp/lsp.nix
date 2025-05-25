@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  config,
   ...
 }:
 {
@@ -277,12 +278,10 @@
       source = "if_many";
     };
     # underline = {
-    #   # TODO: invalid option?
-    #   # severity = "vim.diagnostic.severity.ERROR";
+    # # TODO: invalid option?
+    # severity = "vim.diagnostic.severity.ERROR";
     # };
-    # TODO: figure out how to access options
-    # signs = lib.mkIf config.programs.nixvim.globals.have_nerd_font {
-    signs = {
+    signs = lib.mkIf config.globals.have_nerd_font {
       text.vim.diagnostic.severity = {
         ERROR = "󰅚 ";
         WARN = "󰀪 ";
@@ -296,7 +295,7 @@
       format.__raw =
         # lua
         ''
-            function(diagnostic)
+          function(diagnostic)
             local diagnostic_message = {
               [vim.diagnostic.severity.ERROR] = diagnostic.message,
               [vim.diagnostic.severity.WARN] = diagnostic.message,
