@@ -38,8 +38,28 @@ in
     plugins.obsidian = {
       enable = true;
 
+      package = pkgs.vimPlugins.obsidian-nvim.overrideAttrs {
+        # https://github.com/obsidian-nvim/obsidian.nvim/issues/164
+        src = pkgs.fetchFromGitHub {
+          owner = "obsidian-nvim";
+          repo = "obsidian.nvim";
+          rev = "obsidian_open_refactor";
+          hash = "sha256-RLh+D86+kn7mr70VLg8Z0l6fYg52/WfRDn4C3Q5xrhA=";
+        };
+      };
+
       settings = {
         inherit (cfg) workspaces;
+
+        open.func.__raw =
+          # lua
+          ''
+            function(uri)
+              -- TODO: the trampoline path doesn't work?
+              -- vim.ui.open(uri, { cmd = { "open", "-a",  "/Applications/Nix Trampolines/Obsidian.app" } })
+              vim.ui.open(uri, { cmd = { "open", "-a",  "/nix/store/msrvrjsc22l3cmwk37hd9n60z76bm80y-system-applications/Applications/Obsidian.app" } })
+            end
+          '';
 
         notes_subdir = "01-fleeting";
 
