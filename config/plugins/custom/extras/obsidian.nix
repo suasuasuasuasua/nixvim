@@ -130,7 +130,7 @@ in
     extraPackages =
       let
         inherit (lib) optionals;
-        inherit (pkgs.stdenv) isDarwin isLinux;
+        inherit (pkgs.stdenv.hostPlatform) isDarwin isLinux;
       in
       with pkgs;
       [ ripgrep ]

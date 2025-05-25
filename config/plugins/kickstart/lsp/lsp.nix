@@ -320,7 +320,7 @@
   extraPackages =
     let
       inherit (lib) optionals;
-      inherit (pkgs.stdenv) isLinux;
+      inherit (pkgs.stdenv.hostPlatform) isLinux;
     in
     optionals isLinux (
       with pkgs;
