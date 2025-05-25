@@ -1,0 +1,19 @@
+\#*
+*.swp
+result
+.DS_Store
+
+/.pre-commit-config.yaml
+.direnv/
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml
+
+# startup time logs
+**/startuptime.log
