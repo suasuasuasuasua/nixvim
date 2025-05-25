@@ -5,12 +5,21 @@
     # use the latest stable branch
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixvim.url = "github:nix-community/nixvim/nixos-25.05";
+
     flake-parts.url = "github:hercules-ci/flake-parts";
+    git-hooks-nix = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
     { nixvim, flake-parts, ... }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [
+        inputs.git-hooks-nix.flakeModule
+      ];
+
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -20,7 +29,12 @@
 
       # https://github.com/nix-community/nixvim/blob/1c5c991fda4519db56c30c9d75ba29ba7097af83/templates/simple/flake.nix
       perSystem =
-        { pkgs, system, ... }:
+        {
+          pkgs,
+          config,
+          system,
+          ...
+        }:
         let
           nixvimLib = nixvim.lib.${system};
           nixvim' = nixvim.legacyPackages.${system};
@@ -35,7 +49,31 @@
           nvim = nixvim'.makeNixvimWithModule nixvimModule;
         in
         {
-          formatter = pkgs.nixfmt-rfc-style;
+          devShells.default = import ./shell.nix {
+            inherit pkgs config;
+          };
+
+          # enable treefmt as the formatter
+          pre-commit.settings.hooks = {
+            treefmt.enable = true;
+
+            deadnix.enable = true; # remove any unused variabes and imports
+            flake-checker = {
+              enable = true; # run `flake check`
+              package = pkgs.flake-checker;
+            };
+            statix.enable = true; # check "good practices" for nix
+
+            commitizen.enable = true;
+            ripsecrets.enable = true;
+
+            # General
+            check-added-large-files.enable = true; # warning about large files (lfs?)
+            check-merge-conflicts.enable = true; # don't commit merge conflicts
+            end-of-file-fixer.enable = true; # add a line at the end of the file
+            trim-trailing-whitespace.enable = true; # trim trailing whitespace
+          };
+          formatter = pkgs.treefmt;
 
           checks = {
             # Run `nix flake check .` to verify that your config is not broken
