@@ -98,7 +98,7 @@ in
               end
 
               return tostring(os.date "%Y-%m-%dT%H-%M-%S") .. "_" .. suffix
-             end
+            end
           '';
 
         # Disable the UI rendering for obsidian
