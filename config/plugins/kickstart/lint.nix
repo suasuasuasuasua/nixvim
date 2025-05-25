@@ -13,7 +13,7 @@
           # lua
           ''
             function()
-              -- TODO: don't like doing it this way, but only way to lazy load
+              -- NOTE: don't like doing it this way, but only way to lazy load
               -- the lint plugin. There is the default interface but that
               -- breaks because of the autocmd here that needs to be loaded
               -- after

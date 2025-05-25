@@ -54,8 +54,6 @@
             # "ripgrep"
           ];
           providers = {
-            # TODO: the pop-up for blink-emoji is _really_ slow for some
-            # reason
             emoji = {
               module = "blink-emoji";
               name = "Emoji";
