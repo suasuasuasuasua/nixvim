@@ -121,12 +121,12 @@ in
       };
     };
 
-    # add the sources to blink
-    plugins.blink-cmp.settings.sources.default = [
-      "obsidian"
-      "obsidian_new"
-      "obsidian_tags"
-    ];
+    # # add the sources to blink
+    # plugins.blink-cmp.settings.sources.default = [
+    #   "obsidian"
+    #   "obsidian_new"
+    #   "obsidian_tags"
+    # ];
 
     extraPackages =
       let
