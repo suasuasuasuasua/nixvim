@@ -31,6 +31,7 @@
       perSystem =
         {
           pkgs,
+          lib,
           config,
           system,
           ...
@@ -82,7 +83,21 @@
 
           packages = {
             # Lets you run `nix run .` to start nixvim
+            # The default configuration is already _pretty_ minimal
             default = nvim;
+
+            # Disable all configurations (lsps, plugins, etc.)
+            minimal = import ./packages/minimal.nix {
+              inherit nvim lib;
+            };
+
+            # Enable all configurations (lsps, plugins, etc.)
+            # WARNING: some plugins require additional configuration, so make
+            # sure to `.extend` the derivation that you choose appropriately
+            # - `obsidian.nvim` needs workspaces for example
+            full = import ./packages/full.nix {
+              inherit nvim lib;
+            };
           };
         };
     };
