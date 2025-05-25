@@ -1,0 +1,24 @@
+# Graphics
+*.png      binary
+*.jpg      binary
+*.jpeg     binary
+*.gif      binary
+*.tif      binary
+*.tiff     binary
+*.ico      binary
+# SVG treated as text by default.
+*.svg      text
+# If you want to treat it as binary,
+# use the following line instead.
+# *.svg    binary
+*.eps      binary
+
+# Text files where line endings should be preserved
+*.patch    -text
+
+#
+# Exclude files from exporting
+#
+.gitattributes export-ignore
+.gitignore     export-ignore
+.gitkeep       export-ignore
