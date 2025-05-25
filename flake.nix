@@ -43,8 +43,13 @@
       };
 
       # You can define your reusable Nixvim modules here
-      flake.nixvimModules = {
-        default = ./config;
+      flake = {
+        nixosModules.default = import ./config;
+        darwinModules.default = import ./config;
+
+        nixvimModules = {
+          default = ./config;
+        };
       };
 
       perSystem =
