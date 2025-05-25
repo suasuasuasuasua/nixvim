@@ -1,5 +1,5 @@
 {
-  description = "Felipe Pinto's nixvim config";
+  description = "suasuasuasuasua's nixvim config";
 
   inputs = {
     # main
