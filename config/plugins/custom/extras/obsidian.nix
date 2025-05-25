@@ -36,6 +36,7 @@ in
   config = lib.mkIf cfg.enable {
     # https://github.com/epwalsh/obsidian.nvim
     plugins.obsidian = {
+      enable = true;
 
       settings = {
         inherit (cfg) workspaces;
@@ -121,12 +122,12 @@ in
       };
     };
 
-    # # add the sources to blink
-    # plugins.blink-cmp.settings.sources.default = [
-    #   "obsidian"
-    #   "obsidian_new"
-    #   "obsidian_tags"
-    # ];
+    # add the sources to blink
+    plugins.blink-cmp.settings.sources.default = [
+      "obsidian"
+      "obsidian_new"
+      "obsidian_tags"
+    ];
 
     extraPackages =
       let
