@@ -13,6 +13,7 @@ nvim.extend {
 
       lsp-names = lib.attrNames opts.lsp;
       custom-plugins = lib.attrNames opts.plugins.custom;
+      kickstart-plugins = lib.attrNames opts.plugins.kickstart;
     in
     {
       colorscheme = {
@@ -37,6 +38,15 @@ nvim.extend {
           }
           // acc
         ) { } custom-plugins;
+        kickstart = builtins.foldl' (
+          acc: name:
+          {
+            ${name} = {
+              inherit enable;
+            };
+          }
+          // acc
+        ) { } kickstart-plugins;
       };
     };
 }

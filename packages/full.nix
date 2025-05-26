@@ -8,13 +8,16 @@ nvim.extend {
     let
       inherit (nvim) options;
       opts = options.nixvim;
+
       enable = true;
 
       lsp-names = lib.attrNames opts.lsp;
-      plugins = lib.attrNames opts.plugins;
+      custom-plugins = lib.attrNames opts.plugins.custom;
     in
     {
-      colorscheme.enable = true;
+      colorscheme = {
+        inherit enable;
+      };
       lsp = builtins.foldl' (
         acc: name:
         {
@@ -24,14 +27,16 @@ nvim.extend {
         }
         // acc
       ) { } lsp-names;
-      plugins = builtins.foldl' (
-        acc: name:
-        {
-          ${name} = {
-            inherit enable;
-          };
-        }
-        // acc
-      ) { } plugins;
+      plugins = {
+        custom = builtins.foldl' (
+          acc: name:
+          {
+            ${name} = {
+              inherit enable;
+            };
+          }
+          // acc
+        ) { } custom-plugins;
+      };
     };
 }

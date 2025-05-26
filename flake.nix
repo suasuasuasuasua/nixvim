@@ -81,24 +81,34 @@
             default = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimModule;
           };
 
-          packages = {
-            # Lets you run `nix run .` to start nixvim
-            # The default configuration is already _pretty_ minimal
-            default = nvim;
-
-            # Disable all configurations (lsps, plugins, etc.)
-            minimal = import ./packages/minimal.nix {
-              inherit nvim lib;
-            };
-
-            # Enable all configurations (lsps, plugins, etc.)
-            # WARNING: some plugins require additional configuration, so make
-            # sure to `.extend` the derivation that you choose appropriately
-            # - `obsidian.nvim` needs workspaces for example
-            full = import ./packages/full.nix {
-              inherit nvim lib;
-            };
-          };
+          # Lets you run `nix run .` to start nixvim
+          packages =
+            builtins.foldl'
+              (
+                acc: profile:
+                {
+                  ${profile} = import ./packages/${profile}.nix {
+                    inherit nvim lib;
+                  };
+                }
+                // acc
+              )
+              { }
+              # in order of plugin and configuration complexity
+              [
+                # Disable EVERYTHING (kickstart and custom)
+                "plain"
+                # Disable all configurations (lsps, plugins, etc.)
+                "minimal"
+                # The default configuration has the kickstart configuration and
+                # a few essential custom plugins
+                "default"
+                # Enable all configurations (lsps, plugins, etc.)
+                # WARNING: some plugins require additional configuration, so make
+                # sure to `.extend` the derivation that you choose appropriately
+                # - `obsidian.nvim` needs workspaces for example
+                "full"
+              ];
         };
     };
 }
