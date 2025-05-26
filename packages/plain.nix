@@ -19,15 +19,23 @@ nvim.extend {
       colorscheme = {
         inherit enable;
       };
-      lsp = builtins.foldl' (
-        acc: name:
-        {
-          ${name} = {
+      lsp =
+        builtins.foldl'
+          (
+            acc: name:
+            {
+              ${name} = {
+                inherit enable;
+              };
+            }
+            // acc
+          )
+          {
+            # disable the lsp module itself
+            # also disable accompanying lsp plugins
             inherit enable;
-          };
-        }
-        // acc
-      ) { } lsp-names;
+          }
+          lsp-names;
       plugins = {
         custom = builtins.foldl' (
           acc: name:
