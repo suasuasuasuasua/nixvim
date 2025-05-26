@@ -11,31 +11,24 @@ nvim.extend {
 
       enable = false;
 
-      lsp-names = lib.attrNames opts.lsp;
+      lsp-languages = lib.attrNames opts.lsp.languages;
       custom-plugins = lib.attrNames opts.plugins.custom;
       kickstart-plugins = lib.attrNames opts.plugins.kickstart;
     in
     {
-      colorscheme = {
-        inherit enable;
-      };
-      lsp =
-        builtins.foldl'
-          (
-            acc: name:
-            {
-              ${name} = {
-                inherit enable;
-              };
-            }
-            // acc
-          )
+      colorscheme.enable = false;
+      lsp = {
+        enable = false;
+        languages = builtins.foldl' (
+          acc: name:
           {
-            # disable the lsp module itself
-            # also disable accompanying lsp plugins
-            inherit enable;
+            ${name} = {
+              inherit enable;
+            };
           }
-          lsp-names;
+          // acc
+        ) { } lsp-languages;
+      };
       plugins = {
         custom = builtins.foldl' (
           acc: name:

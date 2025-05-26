@@ -6,10 +6,10 @@
 }:
 let
   name = "jsonls";
-  cfg = config.nixvim.lsp.${name};
+  cfg = config.nixvim.lsp.languages.${name};
 in
 {
-  options.nixvim.lsp.${name} = {
+  options.nixvim.lsp.languages.${name} = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
