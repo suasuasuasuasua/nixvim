@@ -22,6 +22,7 @@ pkgs.mkShellNoCC {
     vim-startuptime # proflie vim and neovim
 
     # formatter
+    treefmt
     nodePackages.prettier
     nixfmt-rfc-style # nix formatter
 
