@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 {
   # Autoformat
   # https://nix-community.github.io/nixvim/plugins/conform-nvim.html
@@ -32,7 +37,7 @@
       };
     };
 
-    lazyLoad = {
+    lazyLoad = lib.mkIf config.plugins.lz-n.enable {
       enable = true;
       settings = {
         event = [ "BufWritePre" ];

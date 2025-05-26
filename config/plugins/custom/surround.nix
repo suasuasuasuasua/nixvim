@@ -21,7 +21,7 @@ in
     plugins.nvim-surround = {
       enable = true;
 
-      lazyLoad = {
+      lazyLoad = lib.mkIf config.plugins.lz-n.enable {
         enable = true;
 
         settings = {

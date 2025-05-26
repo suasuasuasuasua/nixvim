@@ -39,7 +39,7 @@ in
       # https://nix-community.github.io/nixvim/colorschemes/catppuccin/index.html
       catppuccin = lib.mkIf (cfg.colorscheme.name == "catppuccin") {
         enable = true;
-        lazyLoad = {
+        lazyLoad = lib.mkIf config.plugins.lz-n.enable {
           enable = true;
           settings = {
             colorscheme = "catppuccin";
@@ -64,7 +64,7 @@ in
       # https://nix-community.github.io/nixvim/colorschemes/tokyonight/index.html
       tokyonight = lib.mkIf (cfg.colorscheme.name == "tokyonight") {
         enable = true;
-        lazyLoad = {
+        lazyLoad = lib.mkIf config.plugins.lz-n.enable {
           enable = true;
           settings = {
             colorscheme = "tokyonight";
@@ -79,7 +79,7 @@ in
       # https://nix-community.github.io/nixvim/colorschemes/vscode/index.html
       vscode = lib.mkIf (cfg.colorscheme.name == "vscode") {
         enable = true;
-        lazyLoad = {
+        lazyLoad = lib.mkIf config.plugins.lz-n.enable {
           enable = true;
           settings = {
             colorscheme = "vscode";

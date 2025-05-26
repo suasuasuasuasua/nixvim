@@ -31,7 +31,7 @@ in
       })
     ];
 
-    plugins.lz-n = {
+    plugins.lz-n = lib.mkIf config.plugins.lz-n.enable {
       # https://nix-community.github.io/nixvim/plugins/lz-n/plugins.html
       plugins = [
         {

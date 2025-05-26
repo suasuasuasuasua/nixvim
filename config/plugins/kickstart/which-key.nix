@@ -8,7 +8,7 @@
   # https://nix-community.github.io/nixvim/plugins/which-key/index.html
   plugins.which-key = {
     enable = true;
-    lazyLoad = {
+    lazyLoad = lib.mkIf config.plugins.lz-n.enable {
       enable = true;
       settings = {
         event = [ "DeferredUIEnter" ];

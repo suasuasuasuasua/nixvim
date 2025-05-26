@@ -1,5 +1,5 @@
+{ lib, config, ... }:
 {
-
   # Adds git related signs to the gutter, as well as utilities for managing changes
   # See `:help gitsigns` to understand what the configuration keys do
   # https://nix-community.github.io/nixvim/plugins/gitsigns/index.html
@@ -25,7 +25,7 @@
       };
     };
 
-    lazyLoad = {
+    lazyLoad = lib.mkIf config.plugins.lz-n.enable {
       enable = true;
       settings = {
         # LazyFile is a shorthand that lazy.nvim uses

@@ -1,3 +1,4 @@
+{ lib, config, ... }:
 {
 
   # Add indentation guides even on blank lines
@@ -6,7 +7,7 @@
   plugins.indent-blankline = {
     enable = true;
 
-    lazyLoad = {
+    lazyLoad = lib.mkIf config.plugins.lz-n.enable {
       enable = true;
       settings = {
         # LazyFile is a shorthand that lazy.nvim uses

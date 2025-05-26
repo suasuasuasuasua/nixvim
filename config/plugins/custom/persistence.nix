@@ -23,7 +23,7 @@ in
 
       settings = { };
 
-      lazyLoad = {
+      lazyLoad = lib.mkIf config.plugins.lz-n.enable {
         enable = true;
         settings = {
           event = [ "BufReadPre" ];

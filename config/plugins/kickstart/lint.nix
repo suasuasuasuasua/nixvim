@@ -1,3 +1,4 @@
+{ lib, config, ... }:
 {
 
   # Linting
@@ -5,7 +6,7 @@
   plugins.lint = {
     enable = true;
 
-    lazyLoad = {
+    lazyLoad = lib.mkIf config.plugins.lz-n.enable {
       enable = true;
       settings = {
         # equivalent to config (lazy.nvim)

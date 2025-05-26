@@ -21,7 +21,7 @@ in
       # https://github.com/kevinhwang91/nvim-ufo
       enable = true;
 
-      lazyLoad = {
+      lazyLoad = lib.mkIf config.plugins.lz-n.enable {
         enable = true;
 
         settings = {

@@ -28,7 +28,7 @@ in
         };
       };
 
-      lazyLoad = {
+      lazyLoad = lib.mkIf config.plugins.lz-n.enable {
         enable = true;
         settings = {
           ft = "markdown";

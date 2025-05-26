@@ -1,4 +1,9 @@
-{ pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 {
 
   # Fuzzy Finder (files, lsp, etc)
@@ -111,7 +116,7 @@
       extensions.__raw = "{ ['ui-select'] = { require('telescope.themes').get_dropdown() } }";
     };
 
-    lazyLoad = {
+    lazyLoad = lib.mkIf config.plugins.lz-n.enable {
       enable = true;
       settings = {
         event = [

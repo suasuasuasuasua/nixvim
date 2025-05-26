@@ -1,3 +1,4 @@
+{ lib, config, ... }:
 {
   plugins = {
     blink-cmp = {
@@ -54,6 +55,8 @@
             # "ripgrep"
           ];
           providers = {
+            # TODO: the pop-up for blink-emoji is _really_ slow for some
+            # reason
             emoji = {
               module = "blink-emoji";
               name = "Emoji";
@@ -134,7 +137,7 @@
         };
       };
 
-      lazyLoad = {
+      lazyLoad = lib.mkIf config.plugins.lz-n.enable {
         enable = true;
         settings = {
           event = [ "InsertEnter" ];
@@ -157,7 +160,7 @@
       fromVscode = [
         { }
       ];
-      lazyLoad = {
+      lazyLoad = lib.mkIf config.plugins.lz-n.enable {
         enable = true;
         settings = {
           event = [ "InsertEnter" ];
