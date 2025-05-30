@@ -52,14 +52,14 @@ in
         inherit (cfg) workspaces;
 
         open.func.__raw =
-          # lua
-          ''
-            function(uri)
-              -- TODO: the trampoline path doesn't work?
-              -- vim.ui.open(uri, { cmd = { "open", "-a",  "/Applications/Nix Trampolines/Obsidian.app" } })
-              vim.ui.open(uri, { cmd = { "open", "-a",  "/nix/store/msrvrjsc22l3cmwk37hd9n60z76bm80y-system-applications/Applications/Obsidian.app" } })
-            end
-          '';
+          lib.mkIf pkgs.stdenv.isDarwin
+            # lua
+            ''
+              function(uri)
+                -- NOTE: the trampoline path doesn't work for some reason
+                vim.ui.open(uri, { cmd = { "open", "-a", "${pkgs.obsidian}/Applications/Obsidian.app" } })
+              end
+            '';
 
         notes_subdir = "01-fleeting";
 
