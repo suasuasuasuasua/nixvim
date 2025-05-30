@@ -5,10 +5,10 @@
 }:
 let
   name = "diffview";
-  cfg = config.nixvim.plugins.${name};
+  cfg = config.nixvim.plugins.custom.${name};
 in
 {
-  options.nixvim.plugins.${name} = {
+  options.nixvim.plugins.custom.${name} = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
@@ -22,7 +22,7 @@ in
       enable = true;
     };
 
-    plugins.lz-n = {
+    plugins.lz-n = lib.mkIf config.plugins.lz-n.enable {
       # https://nix-community.github.io/nixvim/plugins/lz-n/plugins.html
       plugins = [
         {

@@ -4,7 +4,7 @@
   ...
 }:
 let
-  name = "guess-indent";
+  name = "indent-blankline";
   cfg = config.nixvim.plugins.kickstart.${name};
 in
 {
@@ -17,8 +17,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # Detect tabstop and shiftwidth automatically
-    plugins.guess-indent = {
+    # Add indentation guides even on blank lines
+    # For configuration see `:help ibl`
+    # https://nix-community.github.io/nixvim/plugins/indent-blankline/index.html
+    plugins.indent-blankline = {
       enable = true;
 
       lazyLoad = lib.mkIf config.plugins.lz-n.enable {

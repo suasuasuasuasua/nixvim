@@ -4,7 +4,7 @@
   ...
 }:
 let
-  name = "guess-indent";
+  name = "nvim-autopairs";
   cfg = config.nixvim.plugins.kickstart.${name};
 in
 {
@@ -17,19 +17,17 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # Detect tabstop and shiftwidth automatically
-    plugins.guess-indent = {
+    # Inserts matching pairs of parens, brackets, etc.
+    # https://nix-community.github.io/nixvim/plugins/nvim-autopairs/index.html
+
+    plugins.nvim-autopairs = {
       enable = true;
 
       lazyLoad = lib.mkIf config.plugins.lz-n.enable {
         enable = true;
+
         settings = {
-          # LazyFile is a shorthand that lazy.nvim uses
-          event = [
-            "BufReadPost"
-            "BufWritePost"
-            "BufNewFile"
-          ];
+          event = [ "InsertEnter" ];
         };
       };
     };

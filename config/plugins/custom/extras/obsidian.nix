@@ -6,10 +6,10 @@
 }:
 let
   name = "obsidian";
-  cfg = config.nixvim.plugins.${name};
+  cfg = config.nixvim.plugins.custom.${name};
 in
 {
-  options.nixvim.plugins.${name} = {
+  options.nixvim.plugins.custom.${name} = {
     enable = lib.mkEnableOption "Enable ${name} plugin for neovim";
     workspaces = lib.mkOption {
       type =
@@ -118,7 +118,7 @@ in
               end
 
               return tostring(os.date "%Y-%m-%dT%H-%M-%S") .. "_" .. suffix
-             end
+            end
           '';
 
         # Disable the UI rendering for obsidian

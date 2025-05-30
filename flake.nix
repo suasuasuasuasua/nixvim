@@ -69,12 +69,43 @@
 
           # enable treefmt as the formatter
           pre-commit.settings.hooks = {
-            treefmt.enable = true;
+            treefmt = {
+              enable = true;
+              # add the packages so the precommit-hook treefmt can find them
+              settings.formatters = with pkgs; [
+                nixfmt-rfc-style
+                nodePackages.prettier
+              ];
+            };
 
             deadnix.enable = true; # remove any unused variabes and imports
             flake-checker = {
               enable = true; # run `flake check`
-              package = pkgs.flake-checker;
+              # TODO: remove when v0.2.6 hits main nixpkgs
+              # 25.05 should be valid now.
+              # https://discourse.nixos.org/t/nixpkgs-overlay-for-mpd-discord-rpc-is-no-longer-working/59982/2
+              # https://discourse.nixos.org/t/how-do-you-override-the-commit-rev-used-by-a-rust-package/47698/6
+              package = pkgs.flake-checker.overrideAttrs rec {
+                pname = "flake-checker";
+                version = "0.2.6";
+
+                src = pkgs.fetchFromGitHub {
+                  owner = "DeterminateSystems";
+                  repo = "flake-checker";
+                  rev = "v0.2.6";
+                  hash = "sha256-qEdwtyk5IaYCx67BFnLp4iUN+ewfPMl/wjs9K4hKqGc=";
+                };
+                cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
+                  inherit src;
+                  hash = "sha256-5eaVjrAPxBQdG+LQ6mQ/ZYAdslpdK3mrZ5Vbuwe3iQw=";
+                };
+                # NOTE: not working this way for some reason -- something about
+                # updating the cargoHash but that is never output
+                # cargoDeps = drv.cargoDeps.overrideAttrs {
+                #   inherit src;
+                #   hash = "sha256-5eaVjrAPxBQdG+LQ6mQ/ZYAdslpdK3mrZ5Vbuwe3iQw=";
+                # };
+              };
             };
             statix.enable = true; # check "good practices" for nix
 
@@ -94,10 +125,34 @@
             default = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimModule;
           };
 
-          packages = {
-            # Lets you run `nix run .` to start nixvim
-            default = nvim;
-          };
+          # Lets you run `nix run .` to start nixvim
+          packages =
+            builtins.foldl'
+              (
+                acc: profile:
+                {
+                  ${profile} = import ./packages/${profile}.nix {
+                    inherit nvim lib;
+                  };
+                }
+                // acc
+              )
+              { }
+              # in order of plugin and configuration complexity
+              [
+                # Disable EVERYTHING (kickstart and custom)
+                "plain"
+                # Disable all configurations (lsps, plugins, etc.)
+                "minimal"
+                # The default configuration has the kickstart configuration and
+                # a few essential custom plugins
+                "default"
+                # Enable all configurations (lsps, plugins, etc.)
+                # WARNING: some plugins require additional configuration, so make
+                # sure to `.extend` the derivation that you choose appropriately
+                # - `obsidian.nvim` needs workspaces for example
+                "full"
+              ];
         };
     };
 }

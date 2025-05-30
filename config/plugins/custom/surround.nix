@@ -5,10 +5,10 @@
 }:
 let
   name = "surround";
-  cfg = config.nixvim.plugins.${name};
+  cfg = config.nixvim.plugins.custom.${name};
 in
 {
-  options.nixvim.plugins.${name} = {
+  options.nixvim.plugins.custom.${name} = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
@@ -21,7 +21,7 @@ in
     plugins.nvim-surround = {
       enable = true;
 
-      lazyLoad = {
+      lazyLoad = lib.mkIf config.plugins.lz-n.enable {
         enable = true;
 
         settings = {

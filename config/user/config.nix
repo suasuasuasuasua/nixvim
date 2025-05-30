@@ -1,8 +1,4 @@
-{ lib, config, ... }:
-let
-  cfg = config.nixvim;
-in
-lib.mkIf cfg.enable {
+{
   opts = {
     cc = "80,81";
     textwidth = 80;

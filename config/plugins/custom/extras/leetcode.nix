@@ -6,10 +6,10 @@
 }:
 let
   name = "leetcode";
-  cfg = config.nixvim.plugins.${name};
+  cfg = config.nixvim.plugins.custom.${name};
 in
 {
-  options.nixvim.plugins.${name} = {
+  options.nixvim.plugins.custom.${name} = {
     enable = lib.mkEnableOption "Enable ${name} plugin for neovim";
   };
 

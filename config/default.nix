@@ -1,9 +1,9 @@
 {
   imports = [
-    ./user
-    ./plugins/kickstart
     ./plugins/custom
+    ./plugins/kickstart
 
+    ./user
     ./kickstart.nix
   ];
 }

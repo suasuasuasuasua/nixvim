@@ -1,8 +1,4 @@
-{ lib, config, ... }:
-let
-  cfg = config.nixvim;
-in
-lib.mkIf cfg.enable {
+{
   # Performance tweaks
   # https://nix-community.github.io/nixvim/performance/byteCompileLua.html
   performance = {
