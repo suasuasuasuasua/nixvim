@@ -37,8 +37,8 @@ in
     # `:Telescope colorscheme`.
     colorschemes = {
       # https://nix-community.github.io/nixvim/colorschemes/catppuccin/index.html
-      catppuccin = lib.mkIf (cfg.colorscheme.name == "catppuccin") {
-        enable = true;
+      catppuccin = {
+        enable = cfg.colorscheme.name == "catppuccin";
         lazyLoad = lib.mkIf config.plugins.lz-n.enable {
           enable = true;
           settings = {
@@ -53,8 +53,8 @@ in
       };
       # https://nix-community.github.io/nixvim/colorschemes/everforest/index.html
       # * current
-      everforest = lib.mkIf (cfg.colorscheme.name == "everforest") {
-        enable = true;
+      everforest = {
+        enable = cfg.colorscheme.name == "everforest";
         settings = {
           enable_italic = 1;
           # one of “hard”, “medium”, “soft”
@@ -62,8 +62,8 @@ in
         };
       };
       # https://nix-community.github.io/nixvim/colorschemes/tokyonight/index.html
-      tokyonight = lib.mkIf (cfg.colorscheme.name == "tokyonight") {
-        enable = true;
+      tokyonight = {
+        enable = cfg.colorscheme.name == "tokyonight";
         lazyLoad = lib.mkIf config.plugins.lz-n.enable {
           enable = true;
           settings = {
@@ -77,8 +77,8 @@ in
         };
       };
       # https://nix-community.github.io/nixvim/colorschemes/vscode/index.html
-      vscode = lib.mkIf (cfg.colorscheme.name == "vscode") {
-        enable = true;
+      vscode = {
+        enable = cfg.colorscheme.name == "vscode";
         lazyLoad = lib.mkIf config.plugins.lz-n.enable {
           enable = true;
           settings = {
