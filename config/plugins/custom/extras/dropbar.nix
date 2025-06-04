@@ -16,6 +16,17 @@ in
     # https://github.com/Bekaboo/dropbar.nvim/
     plugins.dropbar = {
       enable = true;
+
+      luaConfig.post =
+        # lua
+        ''
+          -- Dropbar can be used as a drop-in replacement for Neovim's builtin
+          -- vim.ui.select menu.
+          --
+          -- To enable this functionality, simply replace vim.ui.select with
+          -- dropbar.utils.menu.select:
+          vim.ui.select = require('dropbar.utils.menu').select
+        '';
     };
 
     keymaps = [
@@ -62,17 +73,6 @@ in
         };
       }
     ];
-
-    extraConfigLua =
-      # lua
-      ''
-        -- Dropbar can be used as a drop-in replacement for Neovim's builtin
-        -- vim.ui.select menu.
-        --
-        -- To enable this functionality, simply replace vim.ui.select with
-        -- dropbar.utils.menu.select:
-        vim.ui.select = require('dropbar.utils.menu').select
-      '';
 
     opts = {
       # allows cursor hovering for file preview

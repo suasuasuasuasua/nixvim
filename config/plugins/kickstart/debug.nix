@@ -28,6 +28,17 @@ in
     plugins = {
       dap = {
         enable = true;
+
+        luaConfig.post =
+          # lua
+          ''
+            local dap = require 'dap'
+            local dapui = require 'dapui'
+
+            dap.listeners.after.event_initialized['dapui_config'] = dapui.open
+            dap.listeners.before.event_terminated['dapui_config'] = dapui.close
+            dap.listeners.before.event_exited['dapui_config'] = dapui.close
+          '';
       };
 
       # Add your own debuggers here
@@ -167,17 +178,5 @@ in
         };
       }
     ];
-
-    # https://nix-community.github.io/nixvim/NeovimOptions/index.html?highlight=extraconfiglua#extraconfiglua
-    extraConfigLua =
-      # lua
-      ''
-        local dap = require 'dap'
-        local dapui = require 'dapui'
-
-        dap.listeners.after.event_initialized['dapui_config'] = dapui.open
-        dap.listeners.before.event_terminated['dapui_config'] = dapui.close
-        dap.listeners.before.event_exited['dapui_config'] = dapui.close
-      '';
   };
 }
