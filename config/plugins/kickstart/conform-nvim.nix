@@ -29,13 +29,12 @@ in
           lsp_format = "fallback"; # TODO: performance issues?
         };
         formattersByFt = {
-          lua = [ "stylua" ];
-          # Conform can also run multiple formatters sequentially
-          # python = [ "isort "black" ];
-          #
-          # You can use a sublist to tell conform to run *until* a formatter
-          # is found
-          # javascript = [ [ "prettierd" "prettier" ] ];
+          # Use the "_" filetype to run formatters on filetypes that don't
+          # have other formatters configured.
+          "_" = [
+            "trim_whitespace"
+            "trim_newlines"
+          ];
         };
       };
 
