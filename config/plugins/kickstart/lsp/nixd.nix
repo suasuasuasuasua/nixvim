@@ -42,19 +42,25 @@ in
             # Map of eval information
             # If this is omitted, default search path (<nixpkgs>) will be used.
             nixos = {
-              expr = ''
-                (builtins.getFlake ("git+file://" + toString /home/justinhoang/nixos-config)).nixosConfigurations."penguin".options;
-              '';
+              expr =
+                # nix
+                ''
+                  (builtins.getFlake (builtins.toString ./.)).nixosConfigurations."lab".options;
+                '';
             };
             darwin = {
-              expr = ''
-                (builtins.getFlake ("git+file://" + toString /Users/justinhoang/nixos-config)).darwinConfigurations."mbp3".options;
-              '';
+              expr =
+                # nix
+                ''
+                  (builtins.getFlake (builtins.toString ./.)).darwinConfigurations."mbp3".options;
+                '';
             };
             home-manager = {
-              expr = ''
-                (builtins.getFlake ("git+file://" + toString /home/justinhoang/nixos-config)).homeConfigurations."wsl".options;
-              '';
+              expr =
+                # nix
+                ''
+                  (builtins.getFlake (builtins.toString ./.)).nixosConfigurations."lab".options.home-manager.users.type.getSubOptions []
+                '';
             };
           };
         };
