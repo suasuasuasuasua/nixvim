@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 let
@@ -50,23 +49,15 @@ in
                 # lua
                 ''
                   function()
-                    require('conform').format { async = true, lsp_fallback = true }
+                    require('conform').format { async = true, lsp_format = 'fallback' }
                   end
                 '';
-              mode = "n";
+              mode = "";
               desc = "[F]ormat buffer";
             }
           ];
         };
       };
     };
-
-    # Dependencies
-    #
-    # https://nix-community.github.io/nixvim/NeovimOptions/index.html?highlight=extraplugins#extrapackages
-    extraPackages = with pkgs; [
-      # Used to format Lua code
-      stylua
-    ];
   };
 }
