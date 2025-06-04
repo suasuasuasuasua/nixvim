@@ -22,10 +22,20 @@ in
         installRustc = false;
       };
 
+      conform-nvim.settings.formattersByFt =
+        lib.mkIf config.nixvim.plugins.kickstart.conform-nvim.enable
+          {
+            rust = [ "rustfmt" ];
+          };
+
       treesitter.grammarPackages =
         with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
           rust
         ];
     };
+
+    extraPackages = with pkgs; [
+      rustfmt
+    ];
   };
 }

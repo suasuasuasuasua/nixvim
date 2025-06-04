@@ -20,11 +20,22 @@ in
         # NOTE: add options as I need
       };
 
+      conform-nvim.settings.formattersByFt =
+        lib.mkIf config.nixvim.plugins.kickstart.conform-nvim.enable
+          {
+            javscript = [ "prettierd" ];
+            typescript = [ "prettierd" ];
+          };
+
       treesitter.grammarPackages =
         with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
           javascript
           typescript
         ];
     };
+
+    extraPackages = with pkgs; [
+      prettierd
+    ];
   };
 }

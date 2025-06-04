@@ -5,7 +5,7 @@
   ...
 }:
 let
-  name = "tailwindcss";
+  name = "sqls";
   cfg = config.nixvim.lsp.languages.${name};
 in
 {
@@ -15,15 +15,25 @@ in
 
   config = lib.mkIf cfg.enable {
     plugins = {
-      lsp.servers.tailwindcss = {
+      lsp.servers.sqls = {
         enable = true;
         # NOTE: add options as I need
       };
 
+      conform-nvim.settings.formattersByFt =
+        lib.mkIf config.nixvim.plugins.kickstart.conform-nvim.enable
+          {
+            sql = [ "sqlfluff" ];
+          };
+
       treesitter.grammarPackages =
         with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-          css
+          sql
         ];
     };
+
+    extraPackages = with pkgs; [
+      sqlfluff
+    ];
   };
 }

@@ -24,10 +24,20 @@ in
         # NOTE: add options as I need
       };
 
+      conform-nvim.settings.formattersByFt =
+        lib.mkIf config.nixvim.plugins.kickstart.conform-nvim.enable
+          {
+            yamlls = [ "yamlfmt" ];
+          };
+
       treesitter.grammarPackages =
         with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
           yaml
         ];
     };
+
+    extraPackages = with pkgs; [
+      yamlfmt
+    ];
   };
 }

@@ -20,10 +20,20 @@ in
         # NOTE: add options as I need
       };
 
+      conform-nvim.settings.formattersByFt =
+        lib.mkIf config.nixvim.plugins.kickstart.conform-nvim.enable
+          {
+            nginx = [ "nginxfmt" ];
+          };
+
       treesitter.grammarPackages =
         with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
           nginx
         ];
     };
+
+    extraPackages = with pkgs; [
+      nginx-config-formatter
+    ];
   };
 }

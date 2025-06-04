@@ -5,7 +5,7 @@
   ...
 }:
 let
-  name = "clangd";
+  name = "cmake";
   cfg = config.nixvim.lsp.languages.${name};
 in
 {
@@ -15,17 +15,25 @@ in
 
   config = lib.mkIf cfg.enable {
     plugins = {
-      lsp.servers.clangd = {
+      lsp.servers.cmake = {
         enable = true;
         # NOTE: add options as I need
       };
 
+      conform-nvim.settings.formattersByFt =
+        lib.mkIf config.nixvim.plugins.kickstart.conform-nvim.enable
+          {
+            cmake = [ "cmake_format" ];
+          };
+
       treesitter.grammarPackages =
         with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-          c
-          cpp
-          printf
+          cmake
         ];
     };
+
+    extraPackages = with pkgs; [
+      cmake-format
+    ];
   };
 }

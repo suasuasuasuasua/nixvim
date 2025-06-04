@@ -5,7 +5,7 @@
   ...
 }:
 let
-  name = "cssls";
+  name = "clangd";
   cfg = config.nixvim.lsp.languages.${name};
 in
 {
@@ -15,15 +15,27 @@ in
 
   config = lib.mkIf cfg.enable {
     plugins = {
-      lsp.servers.cssls = {
+      lsp.servers.clangd = {
         enable = true;
         # NOTE: add options as I need
       };
 
+      conform-nvim.settings.formattersByFt =
+        lib.mkIf config.nixvim.plugins.kickstart.conform-nvim.enable
+          {
+            cpp = [ "clang-format" ];
+          };
+
       treesitter.grammarPackages =
         with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-          css
+          c
+          cpp
+          printf
         ];
     };
+
+    extraPackages = with pkgs; [
+      clang-tools
+    ];
   };
 }

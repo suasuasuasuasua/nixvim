@@ -35,10 +35,20 @@ in
         };
       };
 
+      conform-nvim.settings.formattersByFt =
+        lib.mkIf config.nixvim.plugins.kickstart.conform-nvim.enable
+          {
+            typst = [ "typstyle" ];
+          };
+
       treesitter.grammarPackages =
         with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
           typst
         ];
     };
+
+    extraPackages = with pkgs; [
+      typstyle
+    ];
   };
 }

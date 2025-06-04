@@ -20,6 +20,12 @@ in
         # NOTE: add options as I need
       };
 
+      conform-nvim.settings.formattersByFt =
+        lib.mkIf config.nixvim.plugins.kickstart.conform-nvim.enable
+          {
+            go = [ "gofmt" ];
+          };
+
       treesitter.grammarPackages =
         with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
           go
@@ -27,5 +33,9 @@ in
           gosum
         ];
     };
+
+    extraPackages = with pkgs; [
+      go
+    ];
   };
 }

@@ -24,10 +24,20 @@ in
         # NOTE: add options as I need
       };
 
+      conform-nvim.settings.formattersByFt =
+        lib.mkIf config.nixvim.plugins.kickstart.conform-nvim.enable
+          {
+            toml = [ "taplo" ];
+          };
+
       treesitter.grammarPackages =
         with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
           toml
         ];
     };
+
+    extraPackages = with pkgs; [
+      taplo
+    ];
   };
 }
