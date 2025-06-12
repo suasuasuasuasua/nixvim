@@ -38,16 +38,6 @@ in
     plugins.obsidian = {
       enable = true;
 
-      package = pkgs.vimPlugins.obsidian-nvim.overrideAttrs {
-        # https://github.com/obsidian-nvim/obsidian.nvim/issues/164
-        src = pkgs.fetchFromGitHub {
-          owner = "obsidian-nvim";
-          repo = "obsidian.nvim";
-          rev = "obsidian_open_refactor";
-          hash = "sha256-RLh+D86+kn7mr70VLg8Z0l6fYg52/WfRDn4C3Q5xrhA=";
-        };
-      };
-
       settings = {
         inherit (cfg) workspaces;
 
