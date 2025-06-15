@@ -31,8 +31,25 @@
         "aarch64-darwin"
       ];
 
-      flake.hydraJobs = {
-        inherit (self) packages;
+      flake = {
+        hydraJobs = {
+          inherit (self) packages;
+        };
+        meta = {
+          description = "Experience timeless melodies with a music player that blends classic design with modern technology";
+          homepage = "https://github.com/Losses/rune";
+          license = with nixpkgs.lib.licenses; [
+            mit
+          ];
+          maintainers = [
+            {
+              name = "Justin Hoang";
+              email = "justinhoang@sua.sh";
+              github = "suasuasuasuasua";
+              githubId = 72476123;
+            }
+          ];
+        };
       };
 
       # https://github.com/nix-community/nixvim/blob/1c5c991fda4519db56c30c9d75ba29ba7097af83/templates/simple/flake.nix
