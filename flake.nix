@@ -15,15 +15,14 @@
 
   outputs =
     {
+      self,
       nixpkgs,
       nixvim,
       flake-parts,
       ...
     }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        inputs.git-hooks-nix.flakeModule
-      ];
+      imports = [ inputs.git-hooks-nix.flakeModule ];
 
       systems = [
         "x86_64-linux"
@@ -31,6 +30,10 @@
         "x86_64-darwin"
         "aarch64-darwin"
       ];
+
+      flake.hydraJobs = {
+        inherit (self) packages;
+      };
 
       # https://github.com/nix-community/nixvim/blob/1c5c991fda4519db56c30c9d75ba29ba7097af83/templates/simple/flake.nix
       perSystem =
@@ -145,6 +148,7 @@
                 # - `obsidian.nvim` needs workspaces for example
                 "full"
               ];
+
         };
     };
 }
