@@ -23,8 +23,47 @@
       action = "<Esc>";
     }
     {
+      mode = "i";
+      key = "Jk";
+      action = "<Esc>";
+    }
+    {
+      mode = "i";
+      key = "jK";
+      action = "<Esc>";
+    }
+    {
+      mode = "i";
+      key = "JK";
+      action = "<Esc>";
+    }
+    {
       mode = "t";
       key = "jk";
+      action = "<C-\\><C-n>";
+      options = {
+        desc = "Exit terminal mode (jk)";
+      };
+    }
+    {
+      mode = "t";
+      key = "Jk";
+      action = "<C-\\><C-n>";
+      options = {
+        desc = "Exit terminal mode (jk)";
+      };
+    }
+    {
+      mode = "t";
+      key = "jK";
+      action = "<C-\\><C-n>";
+      options = {
+        desc = "Exit terminal mode (jk)";
+      };
+    }
+    {
+      mode = "t";
+      key = "JK";
       action = "<C-\\><C-n>";
       options = {
         desc = "Exit terminal mode (jk)";
