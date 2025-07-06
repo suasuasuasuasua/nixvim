@@ -5,7 +5,7 @@ not really). My setup is heavily inspired by the [kickstart.nvim
 repository](https://github.com/nvim-lua/kickstart.nvim).
 
 <!-- NOTE: update with images as larger changes come through -->
-![setup 25-05-2025.png](./assets/img/setup_25-05-2025.png)
+![setup 06-07-2025.png](./assets/img/setup_06-07-2025.png)
 
 ## Build
 
