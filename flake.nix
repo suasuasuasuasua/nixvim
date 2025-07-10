@@ -35,7 +35,7 @@
           inherit (self) packages;
         };
         meta = {
-          description = "Experience timeless melodies with a music player that blends classic design with modern technology";
+          description = "My nixvim configuration";
           homepage = "https://github.com/Losses/rune";
           license = with nixpkgs.lib.licenses; [
             mit
