@@ -34,7 +34,7 @@ in
                 -- the lint plugin. There is the default interface but that
                 -- breaks because of the autocmd here that needs to be loaded
                 -- after
-                local lint = require('lint').setup()
+                local lint = require('lint')
 
                 -- disable the default linters
                 for key in pairs(lint.linters_by_ft) do
