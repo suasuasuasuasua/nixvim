@@ -23,6 +23,14 @@ in
       enable = true;
 
       settings = {
+        completions = {
+          blink = {
+            enabled = true;
+          };
+          lsp = {
+            enabled = true;
+          };
+        };
         latex = {
           enabled = false; # latex kinda annoying when bouncing around
         };
