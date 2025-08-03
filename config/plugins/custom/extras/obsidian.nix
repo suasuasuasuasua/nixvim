@@ -51,12 +51,12 @@ in
               end
             '';
 
-        notes_subdir = "01-fleeting";
+        notes_subdir = "fleeting";
 
         # see below for full list of options 👇
         daily_notes = {
           # Optional, if you keep daily notes in a separate directory.
-          folder = "00-dailies";
+          folder = "dailies";
           # Optional, if you want to change the date format for the ID of daily notes.
           date_format = "%Y-%m-%d";
           # Optional, if you want to change the date format of the default alias of daily notes.
@@ -64,7 +64,7 @@ in
           # Optional, default tags to add to each new daily note created.
           default_tags = [ "daily-notes" ];
           # Optional, if you want to automatically insert a template from your template directory like 'daily.md'
-          template = null;
+          template = "daily.md";
         };
 
         # Optional, completion of wiki links, local markdown links, and tags using nvim-cmp.
@@ -84,7 +84,7 @@ in
         };
 
         # Disable all the mappings
-        mappings = null;
+        mappings = { };
 
         # Where to put new notes. Valid options are
         # * "current_dir" - put new notes in same directory as the current
