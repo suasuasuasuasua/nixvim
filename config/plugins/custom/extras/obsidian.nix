@@ -34,7 +34,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # https://github.com/epwalsh/obsidian.nvim
+    # https://github.com/obsidian-nvim/obsidian.nvim
     plugins.obsidian = {
       enable = true;
 
