@@ -83,8 +83,8 @@ in
           time_format = "%H:%M";
         };
 
-        # Disable all the mappings
-        mappings = { };
+        # # Disable all the mappings
+        # mappings = { };
 
         # Where to put new notes. Valid options are
         # * "current_dir" - put new notes in same directory as the current
