@@ -41,16 +41,6 @@ in
       settings = {
         inherit (cfg) workspaces;
 
-        open.func.__raw =
-          lib.mkIf pkgs.stdenv.isDarwin
-            # lua
-            ''
-              function(uri)
-                -- NOTE: the trampoline path doesn't work for some reason
-                vim.ui.open(uri, { cmd = { "open", "-a", "${pkgs.obsidian}/Applications/Obsidian.app" } })
-              end
-            '';
-
         notes_subdir = "fleeting";
 
         # see below for full list of options 👇
