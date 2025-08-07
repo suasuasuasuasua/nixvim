@@ -67,53 +67,53 @@ in
               "path"
               "snippets"
               "buffer"
-              "emoji"
-              "git"
+              # "emoji"
+              # "git"
               # "ripgrep"
             ];
             providers = {
-              # TODO: the pop-up for blink-emoji is _really_ slow for some
-              # reason
-              emoji = {
-                module = "blink-emoji";
-                name = "Emoji";
-                score_offset = 5;
-                # Optional configurations
-                opts = {
-                  insert = true;
-                };
-                should_show_items.__raw =
-                  # lua
-                  ''
-                    function()
-                      return vim.tbl_contains(
-                        -- Enable emoji completion only for git commits and markdown.
-                        -- By default, enabled for all file-types.
-                        { "gitcommit", "markdown" },
-                        vim.o.filetype
-                      )
-                    end
-                  '';
-              };
-              git = {
-                module = "blink-cmp-git";
-                name = "git";
-                # -- only enable this source when filetype is gitcommit, markdown, or 'octo'
-                enabled.__raw =
-                  # lua
-                  ''
-                    function()
-                      return vim.tbl_contains({ 'octo', 'gitcommit', 'markdown' }, vim.bo.filetype)
-                    end
-                  '';
-                score_offset = 10;
-                opts = {
-                  commit = { };
-                  git_centers = {
-                    git_hub = { };
-                  };
-                };
-              };
+              # # TODO: the pop-up for blink-emoji is _really_ slow for some
+              # # reason
+              # emoji = {
+              #   module = "blink-emoji";
+              #   name = "Emoji";
+              #   score_offset = 5;
+              #   # Optional configurations
+              #   opts = {
+              #     insert = true;
+              #   };
+              #   should_show_items.__raw =
+              #     # lua
+              #     ''
+              #       function()
+              #         return vim.tbl_contains(
+              #           -- Enable emoji completion only for git commits and markdown.
+              #           -- By default, enabled for all file-types.
+              #           { "gitcommit", "markdown" },
+              #           vim.o.filetype
+              #         )
+              #       end
+              #     '';
+              # };
+              # git = {
+              #   module = "blink-cmp-git";
+              #   name = "git";
+              #   # -- only enable this source when filetype is gitcommit, markdown, or 'octo'
+              #   enabled.__raw =
+              #     # lua
+              #     ''
+              #       function()
+              #         return vim.tbl_contains({ 'octo', 'gitcommit', 'markdown' }, vim.bo.filetype)
+              #       end
+              #     '';
+              #   score_offset = 10;
+              #   opts = {
+              #     commit = { };
+              #     git_centers = {
+              #       git_hub = { };
+              #     };
+              #   };
+              # };
               # ripgrep = {
               #   async = true;
               #   module = "blink-ripgrep";
