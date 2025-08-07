@@ -117,6 +117,36 @@ in
               mode = "n";
               desc = "[S]earch [O]bsidian";
             }
+            {
+              __unkeyed-1 = "<leader>sot";
+              __unkeyed-3 = "<CMD>Obsidian today<CR>";
+              mode = "n";
+              desc = "[S]earch [O]bsidian [T]oday";
+            }
+            {
+              __unkeyed-1 = "<leader>son";
+              __unkeyed-3 = "<CMD>Obsidian new<CR>";
+              mode = "n";
+              desc = "[S]earch [O]bsidian [N]ew";
+            }
+            {
+              __unkeyed-1 = "<leader>sow";
+              __unkeyed-3 = "<CMD>Obsidian workspace<CR>";
+              mode = "n";
+              desc = "[S]earch [O]bsidian [W]orkspace";
+            }
+            {
+              __unkeyed-1 = "<leader>sof";
+              __unkeyed-3 = "<CMD>Obsidian quick_switch<CR>";
+              mode = "n";
+              desc = "[S]earch [O]bsidian [F]ind (file)";
+            }
+            {
+              __unkeyed-1 = "<leader>sog";
+              __unkeyed-3 = "<CMD>Obsidian search<CR>";
+              mode = "n";
+              desc = "[S]earch [O]bsidian [S]earch (grep)";
+            }
           ];
         };
       };
