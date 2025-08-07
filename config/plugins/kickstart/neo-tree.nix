@@ -118,24 +118,6 @@ in
           Z = "expand_all_nodes";
         };
       };
-
-      sourceSelector = {
-        winbar = true;
-        sources = [
-          {
-            displayName = "fs";
-            source = "filesystem";
-          }
-          {
-            displayName = "buf";
-            source = "buffers";
-          }
-          {
-            displayName = "git";
-            source = "git_status";
-          }
-        ];
-      };
     };
 
     # https://nix-community.github.io/nixvim/keymaps/index.html
