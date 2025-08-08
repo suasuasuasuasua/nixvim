@@ -69,9 +69,7 @@ in
                   end
                 '';
               mode = "n";
-              options = {
-                desc = "Jump to next git [C]hange";
-              };
+              desc = "Jump to next git [C]hange";
             }
             {
               __unkeyed-1 = "[c";
@@ -87,9 +85,7 @@ in
                   end
                 '';
               mode = "n";
-              options = {
-                desc = "Jump to previous git [C]hange";
-              };
+              desc = "Jump to previous git [C]hange";
             }
             # Actions
             # visual mode
@@ -103,9 +99,7 @@ in
                   end
                 '';
               mode = "v";
-              options = {
-                desc = "stage git hunk";
-              };
+              desc = "stage git hunk";
             }
             {
               __unkeyed-1 = "<leader>hr";
@@ -117,9 +111,7 @@ in
                   end
                 '';
               mode = "v";
-              options = {
-                desc = "reset git hunk";
-              };
+              desc = "reset git hunk";
             }
             # normal mode
             {
@@ -132,9 +124,7 @@ in
                   end
                 '';
               mode = "n";
-              options = {
-                desc = "git [s]tage hunk";
-              };
+              desc = "git [s]tage hunk";
             }
             {
               __unkeyed-1 = "<leader>hr";
@@ -146,9 +136,7 @@ in
                   end
                 '';
               mode = "n";
-              options = {
-                desc = "git [r]eset hunk";
-              };
+              desc = "git [r]eset hunk";
             }
             {
               __unkeyed-1 = "<leader>hS";
@@ -160,9 +148,7 @@ in
                   end
                 '';
               mode = "n";
-              options = {
-                desc = "git [S]tage buffer";
-              };
+              desc = "git [S]tage buffer";
             }
             {
               __unkeyed-1 = "<leader>hu";
@@ -174,9 +160,7 @@ in
                   end
                 '';
               mode = "n";
-              options = {
-                desc = "git [u]ndo stage hunk";
-              };
+              desc = "git [u]ndo stage hunk";
             }
             {
               __unkeyed-1 = "<leader>hR";
@@ -188,9 +172,7 @@ in
                   end
                 '';
               mode = "n";
-              options = {
-                desc = "git [R]eset buffer";
-              };
+              desc = "git [R]eset buffer";
             }
             {
               __unkeyed-1 = "<leader>hp";
@@ -202,9 +184,7 @@ in
                   end
                 '';
               mode = "n";
-              options = {
-                desc = "git [p]review hunk";
-              };
+              desc = "git [p]review hunk";
             }
             {
               __unkeyed-1 = "<leader>hb";
@@ -216,9 +196,7 @@ in
                   end
                 '';
               mode = "n";
-              options = {
-                desc = "git [b]lame line";
-              };
+              desc = "git [b]lame line";
             }
             {
               __unkeyed-1 = "<leader>hd";
@@ -230,9 +208,7 @@ in
                   end
                 '';
               mode = "n";
-              options = {
-                desc = "git [d]iff against index";
-              };
+              desc = "git [d]iff against index";
             }
             {
               __unkeyed-1 = "<leader>hD";
@@ -244,9 +220,7 @@ in
                   end
                 '';
               mode = "n";
-              options = {
-                desc = "git [D]iff against last commit";
-              };
+              desc = "git [D]iff against last commit";
             }
             # Toggles
             {
@@ -259,9 +233,7 @@ in
                   end
                 '';
               mode = "n";
-              options = {
-                desc = "[T]oggle git show [b]lame line";
-              };
+              desc = "[T]oggle git show [b]lame line";
             }
             {
               __unkeyed-1 = "<leader>tD";
@@ -273,9 +245,7 @@ in
                   end
                 '';
               mode = "n";
-              options = {
-                desc = "[T]oggle git show [D]eleted";
-              };
+              desc = "[T]oggle git show [D]eleted";
             }
           ];
         };
