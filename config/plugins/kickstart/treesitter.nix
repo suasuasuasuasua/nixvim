@@ -28,7 +28,16 @@ in
       grammarPackages = with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
         bash
         c
+        csv
+        editorconfig
         diff
+        editorconfig
+        git_config
+        git_rebase
+        gitattributes
+        gitcommit
+        gitignore
+        ini
         html
         lua
         luadoc
@@ -36,8 +45,13 @@ in
         markdown_inline
         nix
         query
+        regex
+        ssh_config
+        tmux
+        toml
         vim
         vimdoc
+        yaml
       ];
 
       settings = {
