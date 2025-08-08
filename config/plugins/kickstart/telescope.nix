@@ -47,6 +47,7 @@ in
       # Enable Telescope extensions
       extensions = {
         fzf-native.enable = true;
+        manix.enable = true;
         ui-select.enable = true;
       };
 
@@ -128,6 +129,12 @@ in
         extensions.__raw = "{ ['ui-select'] = { require('telescope.themes').get_dropdown() } }";
       };
 
+      luaConfig.post =
+        # lua
+        ''
+          -- load the extensions
+          require("telescope").load_extension("manix")
+        '';
       lazyLoad = lib.mkIf config.plugins.lz-n.enable {
         enable = true;
         settings = {
