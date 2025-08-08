@@ -11,8 +11,8 @@
 
     # folding
     foldcolumn = "1";
-    foldlevel = 99;
-    foldlevelstart = 99;
+    foldlevel = 0;
+    foldlevelstart = -1;
     foldenable = true;
   };
 
