@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 let
@@ -21,30 +20,47 @@ in
     # https://github.com/christoomey/vim-tmux-navigator
     plugins.tmux-navigator = {
       enable = true;
-    };
-
-    extraPlugins = with pkgs; [
-      # https://github.com/aserowy/tmux.nvim
-      vimPlugins.tmux-nvim
-    ];
-
-    plugins.lz-n = lib.mkIf config.plugins.lz-n.enable {
-      # https://nix-community.github.io/nixvim/plugins/lz-n/plugins.html
-      plugins = [
+      keymaps = [
         {
-          __unkeyed-1 = "tmux.nvim"; # the plugin's name (:h packadd)
-          after =
-            # lua
-            ''
-              function()
-                require("tmux").setup()
-              end
-            '';
-          event = [
-            "DeferredUIEnter"
-          ];
+          action = "left";
+          key = "<C-h>";
+          options = {
+            desc = "Tmux Navigate Left";
+          };
+        }
+        {
+          action = "down";
+          key = "<C-j>";
+          options = {
+            desc = "Tmux Navigate Down";
+          };
+        }
+        {
+          action = "up";
+          key = "<C-k>";
+          options = {
+            desc = "Tmux Navigate Up";
+          };
+        }
+        {
+          action = "right";
+          key = "<C-l>";
+          options = {
+            desc = "Tmux Navigate Right";
+          };
+        }
+        {
+          action = "previous";
+          key = "<C-\\>";
+          options = {
+            desc = "Tmux Navigate Previous";
+          };
         }
       ];
+      settings = {
+        # rebind to give descriptions
+        no_mappings = 1;
+      };
     };
   };
 }
