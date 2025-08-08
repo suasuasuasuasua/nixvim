@@ -105,7 +105,7 @@ in
         ui.enable = false;
       };
 
-      lazyLoad = {
+      lazyLoad = lib.mkIf config.plugins.lz-n.enable {
         enable = true;
 
         settings = {
