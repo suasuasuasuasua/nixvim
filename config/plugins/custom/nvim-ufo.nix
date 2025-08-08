@@ -47,31 +47,31 @@ in
           ];
           # NOTE: doesn't work well with the folding for some reason
           keys = [
-            {
-              __unkeyed-1 = "zR";
-              __unkeyed-3.__raw =
-                # lua
-                ''
-                  function()
-                    require('ufo').openAllFolds()
-                  end
-                '';
-              mode = "n";
-              desc = "Open all Folds (UFO)";
-            }
-            {
-              __unkeyed-1 = "zM";
-              __unkeyed-3.__raw =
-                # lua
-                ''
-                  function()
-                    require('ufo').closeAllFolds()
-                  end
-                '';
-              mode = "n";
-              desc = "Close all Folds (UFO)";
-            }
             # NOTE: confusing to use
+            # {
+            #   __unkeyed-1 = "zR";
+            #   __unkeyed-3.__raw =
+            #     # lua
+            #     ''
+            #       function()
+            #         require('ufo').openAllFolds()
+            #       end
+            #     '';
+            #   mode = "n";
+            #   desc = "Open all Folds (UFO)";
+            # }
+            # {
+            #   __unkeyed-1 = "zM";
+            #   __unkeyed-3.__raw =
+            #     # lua
+            #     ''
+            #       function()
+            #         require('ufo').closeAllFolds()
+            #       end
+            #     '';
+            #   mode = "n";
+            #   desc = "Close all Folds (UFO)";
+            # }
             # {
             #   __unkeyed-1 = "zr";
             #   __unkeyed-3.__raw =
