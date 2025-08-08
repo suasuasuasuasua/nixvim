@@ -34,35 +34,33 @@ in
             #                Package documentation, versions, are evaluated by-need.
             expr = "import <nixpkgs> { }";
           };
-          # TODO: figure out how to include nixos and home configurations
-          # completion :(
           # Tell the language server your desired option set, for completion
           # This is lazily evaluated.
-          options = {
-            # Map of eval information
-            # If this is omitted, default search path (<nixpkgs>) will be used.
-            nixos = {
-              expr =
-                # nix
-                ''
-                  (builtins.getFlake (builtins.toString ./.)).nixosConfigurations."lab".options;
-                '';
-            };
-            darwin = {
-              expr =
-                # nix
-                ''
-                  (builtins.getFlake (builtins.toString ./.)).darwinConfigurations."mbp3".options;
-                '';
-            };
-            home-manager = {
-              expr =
-                # nix
-                ''
-                  (builtins.getFlake (builtins.toString ./.)).nixosConfigurations."lab".options.home-manager.users.type.getSubOptions []
-                '';
-            };
-          };
+          # options = {
+          #   # Map of eval information
+          #   # If this is omitted, default search path (<nixpkgs>) will be used.
+          #   nixos = {
+          #     expr =
+          #       # nix
+          #       ''
+          #         (builtins.getFlake (builtins.toString ./.)).nixosConfigurations."lab".options;
+          #       '';
+          #   };
+          #   darwin = {
+          #     expr =
+          #       # nix
+          #       ''
+          #         (builtins.getFlake (builtins.toString ./.)).darwinConfigurations."mbp3".options;
+          #       '';
+          #   };
+          #   home-manager = {
+          #     expr =
+          #       # nix
+          #       ''
+          #         (builtins.getFlake (builtins.toString ./.)).nixosConfigurations."lab".options.home-manager.users.type.getSubOptions []
+          #       '';
+          #   };
+          # };
         };
       };
 
