@@ -60,6 +60,41 @@ in
           # preview_split: Split direction: "auto", "left", "right", "above", "below".
           preview_split = "auto";
         };
+
+        keymaps = {
+          # open the files and navigate to the parent
+          "l" = "actions.select";
+          "h" = {
+            __unkeyed-1 = "actions.parent";
+            mode = "n";
+          };
+
+          # remap horizontal and vertical splits
+          "<C-h>" = false;
+          "<C-x>" = {
+            __unkeyed-1 = "actions.select";
+            opts = {
+              horizontal = true;
+            };
+          };
+          "<C-s>" = false;
+          "<C-v>" = {
+            __unkeyed-1 = "actions.select";
+            opts = {
+              vertical = true;
+            };
+          };
+
+          # remap refresh to ctrl-r
+          "<C-l>" = false;
+          "<C-r>" = "actions.refresh";
+          # copy the current file path
+          "y." = "actions.copy_entry_path";
+
+          # scroll the preview window
+          "<C-d>" = "actions.preview_scroll_down";
+          "<C-u>" = "actions.preview_scroll_up";
+        };
       };
 
       # NOTE: not recommended according to GitHub
@@ -77,6 +112,14 @@ in
         mode = "n";
         key = "-";
         action = "<CMD>Oil<CR>";
+        options = {
+          desc = "Open parent directory";
+        };
+      }
+      {
+        mode = "n";
+        key = "_";
+        action = "<CMD>Oil --float<CR>";
         options = {
           desc = "Open parent directory";
         };
