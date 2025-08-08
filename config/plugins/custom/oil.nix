@@ -38,6 +38,11 @@ in
         # Send deleted files to the trash instead of permanently deleting them (:help oil-trash)
         delete_to_trash = true;
 
+        win_options = {
+          signcolumn = "yes:2"; # for git sign columns
+          winblend = 0;
+        };
+
         # Configuration for the floating window in oil.open_float
         float = {
           # Padding around the floating window
