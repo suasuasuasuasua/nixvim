@@ -73,7 +73,7 @@ in
           # Diagnostic keymaps
           diagnostic = {
             "<leader>q" = {
-              #mode = "n";
+              mode = "n";
               action = "setloclist";
               desc = "Open diagnostic [Q]uickfix list";
             };
@@ -94,7 +94,7 @@ in
                 "x"
               ];
               action = "code_action";
-              desc = "LSP: [C]ode [A]ction";
+              desc = "LSP: [G]oto Code [A]ction";
             };
             # WARN: This is not Goto Definition, this is Goto Declaration.
             #  For example, in C this would take you to the header.
@@ -142,7 +142,7 @@ in
               key = "gO";
               action.__raw = "require('telescope.builtin').lsp_document_symbols";
               options = {
-                desc = "LSP: [D]ocument [S]ymbols";
+                desc = "LSP: [O]pen Document Symbols";
               };
             }
             # Fuzzy find all the symbols in your current workspace.
@@ -152,7 +152,7 @@ in
               key = "gW";
               action.__raw = "require('telescope.builtin').lsp_dynamic_workspace_symbols";
               options = {
-                desc = "LSP: [W]orkspace [S]ymbols";
+                desc = "LSP: [O]pen Workspace Symbols";
               };
             }
             # Jump to the type of the word under your cursor.
@@ -160,10 +160,10 @@ in
             #  the definition of its *type*, not where it was *defined*.
             {
               mode = "n";
-              key = "grT";
+              key = "grt";
               action.__raw = "require('telescope.builtin').lsp_type_definitions";
               options = {
-                desc = "LSP: Type [D]efinition";
+                desc = "LSP: [G]oto [T]ype Definition";
               };
             }
           ];
@@ -175,15 +175,15 @@ in
         #  specification. When you add nvim-cmp, luasnip, etc. Neovim now has
         #  *more* capabilities. So, we create new capabilities with nvim cmp,
         #  and then broadcast that to the servers.
-        # NOTE: This is done automatically by Nixvim when enabling cmp-nvim-lsp
+        # NOTE: This is done automatically by Nixvim when enabling blink.cmp
         # below is an example if you did want to add new capabilities
-        capabilities =
-          # lua
-          ''
-            --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
-            local blink_capabilities = require('blink.cmp').get_lsp_capabilities()
-            capabilities = vim.tbl_deep_extend('force', capabilities, blink_capabilities)
-          '';
+        # capabilities =
+        #   # lua
+        #   ''
+        #     --  So, we create new capabilities with blink.cmp, and then broadcast that to the servers.
+        #     local blink_capabilities = require('blink.cmp').get_lsp_capabilities()
+        #     capabilities = vim.tbl_deep_extend('force', capabilities, blink_capabilities)
+        #   '';
 
         # This function gets run when an LSP attaches to a particular buffer.
         #   That is to say, every time a new file is opened that is associated
@@ -227,16 +227,17 @@ in
             --
             -- When you move your cursor, the highlights will be cleared (the
             -- second autocommand).
-            if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, bufnr) then
+            local client = vim.lsp.get_client_by_id(event.data.client_id)
+            if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_documentHighlight, event.buf) then
               local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
               vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
-                buffer = bufnr,
+                buffer = event.buf,
                 group = highlight_augroup,
                 callback = vim.lsp.buf.document_highlight,
               })
 
               vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-                buffer = bufnr,
+                buffer = event.buf,
                 group = highlight_augroup,
                 callback = vim.lsp.buf.clear_references,
               })
@@ -245,7 +246,7 @@ in
                 group = vim.api.nvim_create_augroup('kickstart-lsp-detach', { clear = true }),
                 callback = function(event2)
                   vim.lsp.buf.clear_references()
-                  vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = bufnr }
+                  vim.api.nvim_clear_autocmds { group = 'kickstart-lsp-highlight', buffer = event2.buf }
                 end,
               })
             end
@@ -254,10 +255,9 @@ in
             -- code, if the language server you are using supports them
             --
             -- This may be unwanted, since they displace some of your code
-            if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, bufnr) then
+            if client and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf) then
               map('<leader>th', function()
-                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled {
-                  bufnr = bufnr })
+                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
               end, '[T]oggle Inlay [H]ints')
             end
           '';
