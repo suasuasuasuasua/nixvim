@@ -54,10 +54,6 @@ in
           # NOTE: add gitsigns recommended keymaps if you are interested
           # https://nix-community.github.io/nixvim/keymaps/index.html
           keys = [
-            # __unkeyed-1 = "<leader>so";
-            # __unkeyed-3 = "<CMD>Obsidian<CR>";
-            # mode = "n";
-            # desc = "[S]earch [O]bsidian";
             # Navigation
             {
               __unkeyed-1 = "]c";
