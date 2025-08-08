@@ -49,6 +49,7 @@ in
         fzf-native.enable = true;
         manix.enable = true;
         ui-select.enable = true;
+        undo.enable = true;
       };
 
       # You can put your default mappings / updates / etc. in here
@@ -134,6 +135,7 @@ in
         ''
           -- load the extensions
           require("telescope").load_extension("manix")
+          require("telescope").load_extension("undo")
         '';
       lazyLoad = lib.mkIf config.plugins.lz-n.enable {
         enable = true;
