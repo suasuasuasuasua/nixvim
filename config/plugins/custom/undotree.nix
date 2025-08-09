@@ -24,5 +24,17 @@ in
       # https://nix-community.github.io/nixvim/plugins/undotree.html#pluginsundotreesettings
       settings = { };
     };
+
+    keymaps = [
+      # toggle the undo tree
+      {
+        mode = "n";
+        key = "<leader>u";
+        action = "<cmd>UndotreeToggle<cr>";
+        options = {
+          desc = "Toggle [U]ndo Tree";
+        };
+      }
+    ];
   };
 }
