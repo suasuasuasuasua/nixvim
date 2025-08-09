@@ -21,13 +21,7 @@ in
     plugins.twilight = {
       enable = true;
 
-      lazyLoad = lib.mkIf config.plugins.lz-n.enable {
-        enable = true;
-
-        settings = {
-          cmd = "Twilight";
-        };
-      };
+      # NOTE: disable lazy loading so Zen Mode can auto call this
     };
   };
 }

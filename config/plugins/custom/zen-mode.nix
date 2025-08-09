@@ -21,13 +21,26 @@ in
     plugins.zen-mode = {
       enable = true;
 
-      lazyLoad = lib.mkIf config.plugins.lz-n.enable {
-        enable = true;
-
-        settings = {
-          cmd = "ZenMode";
+      settings = {
+        window = {
+          signcolumn = "no";
+          number = false;
+          relativenumber = false;
+          cursorline = false;
+          cursorcolumn = false;
+          foldcolumn = "0";
+          list = false;
+        };
+        plugins = {
+          gitsigns.enabled = true;
+          twilight.enabled = true;
+          tmux.enabled = true;
+          todo.enabled = true;
         };
       };
+
+      # NOTE: disable lazy loading so this can be called
+      # performance impact is negligible
     };
   };
 }
