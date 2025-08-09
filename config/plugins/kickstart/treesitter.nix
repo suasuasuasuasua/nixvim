@@ -77,19 +77,18 @@ in
         #    - Treesitter + textobjects: https://nix-community.github.io/nixvim/plugins/treesitter-textobjects/index.html
       };
 
-      # NOTE: cannot get lazyLoading to work here
-      # lazyLoad = {
-      #   enable = true;
-      #   settings = {
-      #     # LazyFile is a shorthand that lazy.nvim uses
-      #     event = [
-      #       "DeferredUIEnter"
-      #       "BufReadPost"
-      #       "BufWritePost"
-      #       "BufNewFile"
-      #     ];
-      #   };
-      # };
+      lazyLoad = {
+        enable = true;
+        settings = {
+          # LazyFile is a shorthand that lazy.nvim uses
+          event = [
+            "DeferredUIEnter"
+            "BufReadPost"
+            "BufWritePost"
+            "BufNewFile"
+          ];
+        };
+      };
     };
 
     extraPackages = with pkgs; [
