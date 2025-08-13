@@ -77,7 +77,7 @@ in
         #    - Treesitter + textobjects: https://nix-community.github.io/nixvim/plugins/treesitter-textobjects/index.html
       };
 
-      lazyLoad = {
+      lazyLoad = lib.mkIf config.plugins.lz-n.enable {
         enable = true;
         settings = {
           # LazyFile is a shorthand that lazy.nvim uses
