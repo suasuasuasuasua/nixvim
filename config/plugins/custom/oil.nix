@@ -63,14 +63,13 @@ in
 
         keymaps = {
           # open the files and navigate to the parent
-          "l" = "actions.select";
-          "h" = {
+          "<C-l>" = "actions.select";
+          "<C-h>" = {
             __unkeyed-1 = "actions.parent";
             mode = "n";
           };
 
           # remap horizontal and vertical splits
-          "<C-h>" = false;
           "<C-x>" = {
             __unkeyed-1 = "actions.select";
             opts = {
@@ -86,7 +85,6 @@ in
           };
 
           # remap refresh to ctrl-r
-          "<C-l>" = false;
           "<C-r>" = "actions.refresh";
           # copy the current file path
           "y." = "actions.copy_entry_path";
