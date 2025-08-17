@@ -22,7 +22,7 @@ in
       enable = true;
 
       settings = {
-        window = {
+        window.options = {
           signcolumn = "no";
           number = false;
           relativenumber = false;
