@@ -69,10 +69,18 @@ in
         };
       };
       telescopeIntegration.enable = true;
-
-      # TODO: add keybindings
     };
 
+    keymaps = [
+      {
+        mode = "n";
+        key = "<Leader>sn";
+        action = "<cmd>Neorg<CR>";
+        options = {
+          desc = "[S]earch [N]eorg options";
+        };
+      }
+    ];
     plugins.treesitter.grammarPackages =
       with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
         norg
