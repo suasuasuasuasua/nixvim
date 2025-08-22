@@ -10,7 +10,12 @@ let
 in
 {
   options.nixvim.plugins.custom.${name} = {
-    enable = lib.mkEnableOption "Enable ${name} plugin for neovim";
+    # enable = lib.mkEnableOption "Enable ${name} plugin for neovim";
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Enable ${name} plugin for neovim";
+    };
     workspaces = lib.mkOption {
       type =
         with lib.types;
@@ -49,9 +54,20 @@ in
               index = "index.norg";
             };
           };
+          "core.integrations.telescope" = {
+            config = {
+              insert_file_link = {
+                # Whether to show the title preview in telescope. Affects
+                # performance with a large number of files.
+                show_title_preview = true;
+              };
+            };
+          };
         };
       };
       telescopeIntegration.enable = true;
+
+      # TODO: add keybindings
     };
 
     plugins.treesitter.grammarPackages =
