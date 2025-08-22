@@ -63,6 +63,9 @@ in
               };
             };
           };
+          "core.summary" = {
+            __empty = null;
+          };
         };
       };
       telescopeIntegration.enable = true;
