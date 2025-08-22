@@ -1,0 +1,34 @@
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
+let
+  name = "neorg";
+  cfg = config.nixvim.plugins.custom.${name};
+in
+{
+  options.nixvim.plugins.custom.${name} = {
+    enable = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Enable ${name} plugin for neovim";
+    };
+  };
+
+  config = lib.mkIf cfg.enable {
+    # https://github.com/nvim-neorg/neorg
+    plugins.neorg = {
+      enable = true;
+
+      settings = { };
+      telescopeIntegration.enable = true;
+    };
+
+    plugins.treesitter.grammarPackages =
+      with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+        norg
+      ];
+  };
+}
