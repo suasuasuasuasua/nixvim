@@ -88,12 +88,6 @@
 
     # See `:help hlsearch`
     hlsearch = true;
-
-    # Expand the tabs for spaces
-    expandtab = true;
-    smarttab = true;
-    shiftwidth = 2;
-    tabstop = 2;
   };
 
   # [[ Basic Keymaps ]]
