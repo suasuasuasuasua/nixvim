@@ -29,7 +29,6 @@ in
         bash
         c
         csv
-        editorconfig
         diff
         editorconfig
         git_config
@@ -37,8 +36,8 @@ in
         gitattributes
         gitcommit
         gitignore
-        ini
         html
+        ini
         lua
         luadoc
         markdown
