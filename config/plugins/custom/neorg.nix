@@ -15,6 +15,21 @@ in
       default = true;
       description = "Enable ${name} plugin for neovim";
     };
+    workspaces = lib.mkOption {
+      type =
+        with lib.types;
+        let
+          valueType = either str (attrsOf valueType) // {
+            description = "attribute sets of strings";
+          };
+        in
+        nullOr valueType;
+      default = { };
+    };
+    default_workspace = lib.mkOption {
+      type = lib.types.str;
+      default = "";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -22,7 +37,24 @@ in
     plugins.neorg = {
       enable = true;
 
-      settings = { };
+      settings = {
+        load = {
+          "core.concealer" = {
+            config = {
+              icon_preset = "varied";
+            };
+          };
+          "core.defaults" = {
+            __empty = null;
+          };
+          "core.dirman" = {
+            config = {
+              inherit (cfg) workspaces default_workspace;
+              index = "index.norg";
+            };
+          };
+        };
+      };
       telescopeIntegration.enable = true;
     };
 
