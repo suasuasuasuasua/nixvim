@@ -67,73 +67,8 @@ in
               "path"
               "snippets"
               "buffer"
-              # "emoji"
-              # "git"
-              # "ripgrep"
             ];
-            providers = {
-              # # TODO: the pop-up for blink-emoji is _really_ slow for some
-              # # reason
-              # emoji = {
-              #   module = "blink-emoji";
-              #   name = "Emoji";
-              #   score_offset = 5;
-              #   # Optional configurations
-              #   opts = {
-              #     insert = true;
-              #   };
-              #   should_show_items.__raw =
-              #     # lua
-              #     ''
-              #       function()
-              #         return vim.tbl_contains(
-              #           -- Enable emoji completion only for git commits and markdown.
-              #           -- By default, enabled for all file-types.
-              #           { "gitcommit", "markdown" },
-              #           vim.o.filetype
-              #         )
-              #       end
-              #     '';
-              # };
-              # git = {
-              #   module = "blink-cmp-git";
-              #   name = "git";
-              #   # -- only enable this source when filetype is gitcommit, markdown, or 'octo'
-              #   enabled.__raw =
-              #     # lua
-              #     ''
-              #       function()
-              #         return vim.tbl_contains({ 'octo', 'gitcommit', 'markdown' }, vim.bo.filetype)
-              #       end
-              #     '';
-              #   score_offset = 10;
-              #   opts = {
-              #     commit = { };
-              #     git_centers = {
-              #       git_hub = { };
-              #     };
-              #   };
-              # };
-              # ripgrep = {
-              #   async = true;
-              #   module = "blink-ripgrep";
-              #   name = "Ripgrep";
-              #   score_offset = 0;
-              #   opts = {
-              #     prefix_min_len = 3;
-              #     context_size = 5;
-              #     max_filesize = "1M";
-              #     project_root_marker = ".git";
-              #     project_root_fallback = true;
-              #     search_casing = "--ignore-case";
-              #     additional_rg_options = { };
-              #     fallback_to_regex_highlighting = true;
-              #     ignore_paths = { };
-              #     additional_paths = { };
-              #     debug = false;
-              #   };
-              # };
-            };
+            providers = { };
           };
           snippets = {
             preset = "luasnip";
