@@ -10,12 +10,7 @@ let
 in
 {
   options.nixvim.plugins.custom.${name} = {
-    # enable = lib.mkEnableOption "Enable ${name} plugin for neovim";
-    enable = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Enable ${name} plugin for neovim";
-    };
+    enable = lib.mkEnableOption "Enable ${name} plugin for neovim";
     workspaces = lib.mkOption {
       type =
         with lib.types;
