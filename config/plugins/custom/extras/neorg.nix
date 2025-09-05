@@ -11,21 +11,6 @@ in
 {
   options.nixvim.plugins.custom.${name} = {
     enable = lib.mkEnableOption "Enable ${name} plugin for neovim";
-    workspaces = lib.mkOption {
-      type =
-        with lib.types;
-        let
-          valueType = either str (attrsOf valueType) // {
-            description = "attribute sets of strings";
-          };
-        in
-        nullOr valueType;
-      default = { };
-    };
-    default_workspace = lib.mkOption {
-      type = lib.types.str;
-      default = "";
-    };
   };
 
   config = lib.mkIf cfg.enable {

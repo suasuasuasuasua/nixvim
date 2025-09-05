@@ -10,21 +10,11 @@ in
 {
   options.nixvim.plugins.custom.${name} = {
     enable = lib.mkEnableOption "Enable ${name} plugin for neovim";
-    model = lib.mkOption {
-      type = lib.types.nullOr lib.types.str;
-      default = null;
-    };
-    url = lib.mkOption {
-      type = lib.types.nullOr lib.types.str;
-      default = null;
-    };
   };
 
   config = lib.mkIf cfg.enable {
     # https://github.com/nomnivore/ollama.nvim
     plugins.ollama = {
-      inherit (cfg) model url;
-
       enable = true;
     };
 

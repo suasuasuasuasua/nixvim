@@ -11,26 +11,6 @@ in
 {
   options.nixvim.plugins.custom.${name} = {
     enable = lib.mkEnableOption "Enable ${name} plugin for neovim";
-    workspaces = lib.mkOption {
-      type =
-        with lib.types;
-        listOf (
-          types.submodule {
-            options = {
-              name = lib.mkOption {
-                type = lib.types.str;
-                description = "The name for this workspace";
-              };
-
-              path = lib.mkOption {
-                type = lib.types.path;
-                description = "The path of the workspace.";
-              };
-            };
-          }
-        );
-      default = [ ];
-    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -39,8 +19,6 @@ in
       enable = true;
 
       settings = {
-        inherit (cfg) workspaces;
-
         notes_subdir = "fleeting";
 
         # see below for full list of options 👇
