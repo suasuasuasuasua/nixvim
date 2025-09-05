@@ -98,26 +98,7 @@
             };
 
             deadnix.enable = true; # remove any unused variabes and imports
-            flake-checker = {
-              enable = true; # run `flake check`
-              # TODO: remove when v0.2.6 hits main nixpkgs
-              # https://discourse.nixos.org/t/nixpkgs-overlay-for-mpd-discord-rpc-is-no-longer-working/59982
-              package = pkgs.flake-checker.overrideAttrs rec {
-                pname = "flake-checker";
-                version = "0.2.6";
-
-                src = pkgs.fetchFromGitHub {
-                  owner = "DeterminateSystems";
-                  repo = "flake-checker";
-                  rev = "v0.2.6";
-                  hash = "sha256-qEdwtyk5IaYCx67BFnLp4iUN+ewfPMl/wjs9K4hKqGc=";
-                };
-                cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
-                  inherit src;
-                  hash = "sha256-5eaVjrAPxBQdG+LQ6mQ/ZYAdslpdK3mrZ5Vbuwe3iQw=";
-                };
-              };
-            };
+            flake-checker.enable = true; # run `flake check`
             statix.enable = true; # check "good practices" for nix
 
             commitizen.enable = true;
