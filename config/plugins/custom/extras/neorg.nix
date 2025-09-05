@@ -30,7 +30,6 @@ in
           };
           "core.dirman" = {
             config = {
-              inherit (cfg) workspaces default_workspace;
               index = "index.norg";
             };
           };
