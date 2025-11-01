@@ -5,7 +5,7 @@
   ...
 }:
 let
-  name = "pyright";
+  name = "pylsp";
   cfg = config.nixvim.lsp.languages.${name};
 in
 {
@@ -19,7 +19,7 @@ in
 
   config = lib.mkIf cfg.enable {
     plugins = {
-      lsp.servers.pyright = {
+      lsp.servers.pylsp = {
         enable = true;
         # NOTE: add options as I need
       };
