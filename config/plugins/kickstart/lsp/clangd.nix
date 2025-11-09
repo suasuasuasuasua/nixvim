@@ -41,5 +41,14 @@ in
     extraPackages = with pkgs; [
       clang-tools
     ];
+
+    keymaps = [
+      # Switch between source and header
+      {
+        mode = "n";
+        key = "<M-o>";
+        action = "<cmd>ClangdSwitchSourceHeader<CR>";
+      }
+    ];
   };
 }
