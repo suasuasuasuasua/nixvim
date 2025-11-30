@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 let
@@ -60,9 +59,11 @@ in
         };
       }
     ];
-    plugins.treesitter.grammarPackages =
-      with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-        norg
-      ];
+
+    # NOTE: deprecated since 25.11?
+    # plugins.treesitter.grammarPackages =
+    #   with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+    #     norg
+    #   ];
   };
 }
