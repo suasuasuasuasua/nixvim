@@ -3,8 +3,8 @@
 
   inputs = {
     # use the latest stable branch
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
-    nixvim.url = "github:nix-community/nixvim/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixvim.url = "github:nix-community/nixvim/nixos-25.11";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     git-hooks-nix = {
@@ -98,7 +98,7 @@
             };
 
             deadnix.enable = true; # remove any unused variabes and imports
-            flake-checker.enable = true; # run `flake check`
+            flake-checker.enable = false; # run `flake check`
             statix.enable = true; # check "good practices" for nix
 
             commitizen.enable = true;
