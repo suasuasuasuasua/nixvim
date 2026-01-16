@@ -47,7 +47,7 @@ in
       {
         mode = "n";
         key = "<M-o>";
-        action = "<cmd>ClangdSwitchSourceHeader<CR>";
+        action = "<cmd>LspClangdSwitchSourceHeader<CR>";
       }
     ];
   };
