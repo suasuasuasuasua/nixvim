@@ -19,28 +19,18 @@ in
 
   config = lib.mkIf cfg.enable {
     # https://github.com/HakonHarnes/img-clip.nvim
-    extraPlugins = with pkgs.vimPlugins; [
-      img-clip-nvim
-    ];
+    plugins.img-clip = {
+      enable = true;
 
-    plugins.lz-n = lib.mkIf config.plugins.lz-n.enable {
-      # https://nix-community.github.io/nixvim/plugins/lz-n/plugins.html
-      plugins = [
-        {
-          __unkeyed-1 = "img-clip.nvim"; # the plugin's name (:h packadd)
-          after =
-            # lua
-            ''
-              function()
-                require('img-clip').setup()
-              end
-            '';
-          # LazyFile is a shorthand that lazy.nvim uses
+      lazyLoad = lib.mkIf config.plugins.lz-n.enable {
+        enable = true;
+
+        settings = {
           event = [
             "DeferredUIEnter"
           ];
-        }
-      ];
+        };
+      };
     };
 
     extraPackages =
