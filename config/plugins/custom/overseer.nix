@@ -29,10 +29,22 @@ in
 
         settings = {
           event = [ "DeferredUIEnter" ];
+          keys = [
+            {
+              __unkeyed-1 = "<leader>oo";
+              __unkeyed-3 = "<CMD>OverseerToggle<CR>";
+              mode = "n";
+              desc = "[O]verseer T[O]ggle";
+            }
+            {
+              __unkeyed-1 = "<leader>or";
+              __unkeyed-3 = "<CMD>OverseerRun<CR>";
+              mode = "n";
+              desc = "[O]verseer [R]run";
+            }
+          ];
         };
       };
     };
-
-    keymaps = [ ];
   };
 }
