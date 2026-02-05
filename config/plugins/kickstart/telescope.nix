@@ -84,7 +84,10 @@ in
           };
         };
         "<leader>sw" = {
-          mode = "n";
+          mode = [
+            "n"
+            "v"
+          ];
           action = "grep_string";
           options = {
             desc = "[S]earch current [W]ord";
@@ -116,6 +119,13 @@ in
           action = "oldfiles";
           options = {
             desc = "[S]earch Recent Files ('.' for repeat)";
+          };
+        };
+        "<leader>sc" = {
+          mode = "n";
+          action = "commands";
+          options = {
+            desc = "[S]earch [C]ommands";
           };
         };
         "<leader><leader>" = {
@@ -155,7 +165,7 @@ in
                   function()
                     require('telescope.builtin').current_buffer_fuzzy_find(
                       require('telescope.themes').get_dropdown {
-                        winblend = 10,
+                        winblend = 15,
                         previewer = false
                       }
                     )
