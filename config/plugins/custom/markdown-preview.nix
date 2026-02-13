@@ -18,22 +18,23 @@ in
 
   config = lib.mkIf cfg.enable {
     # https://github.com/MeanderingProgrammer/render-markdown.nvim
-    plugins.render-markdown = {
+    plugins.markdown-preview = {
       enable = true;
 
-      lazyLoad = lib.mkIf config.plugins.lz-n.enable {
-        enable = true;
-
-        settings = {
-          event = [ "DeferredUIEnter" ];
-          cmd = [
-            "MarkdownPreviewToggle"
-            "MarkdownPreview"
-            "MarkdownPreviewStop"
-          ];
-          ft = "markdown";
-        };
-      };
+      # TODO: possible in 26.05
+      # lazyLoad = lib.mkIf config.plugins.lz-n.enable {
+      #   enable = true;
+      #
+      #   settings = {
+      #     event = [ "DeferredUIEnter" ];
+      #     cmd = [
+      #       "MarkdownPreviewToggle"
+      #       "MarkdownPreview"
+      #       "MarkdownPreviewStop"
+      #     ];
+      #     ft = "markdown";
+      #   };
+      # };
     };
   };
 }
