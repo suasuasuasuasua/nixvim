@@ -69,7 +69,7 @@
     #  See `:help 'listchars'`
     list = true;
     # NOTE: .__raw here means that this field is raw lua code
-    listchars.__raw = "{ tab = '» ', trail = '·', nbsp = '␣' }";
+    listchars.__raw = "{ tab = '>\ ', trail = '-', nbsp = '+' }";
 
     # Preview subsitutions live, as you type!
     inccommand = "split";
