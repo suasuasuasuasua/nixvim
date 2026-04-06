@@ -21,14 +21,7 @@ in
     plugins = {
       lsp.servers.nil_ls = {
         enable = true;
-        # NOTE: add options as I need
       };
-
-      conform-nvim.settings.formattersByFt =
-        lib.mkIf config.nixvim.plugins.kickstart.conform-nvim.enable
-          {
-            nix = [ "nil" ];
-          };
 
       treesitter.grammarPackages =
         with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [

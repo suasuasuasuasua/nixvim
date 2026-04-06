@@ -4,11 +4,11 @@
   ...
 }:
 let
-  name = "web-devicons";
-  cfg = config.nixvim.plugins.kickstart.${name};
+  name = "nvim-origami";
+  cfg = config.nixvim.plugins.custom.${name};
 in
 {
-  options.nixvim.plugins.kickstart.${name} = {
+  options.nixvim.plugins.custom.${name} = {
     enable = lib.mkOption {
       type = lib.types.bool;
       default = true;
@@ -17,8 +17,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    plugins.web-devicons = {
+    # https://github.com/chrisgrieser/nvim-origami
+    plugins.origami = {
       enable = true;
+      settings = { };
     };
   };
 }

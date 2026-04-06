@@ -40,215 +40,55 @@ in
             text = "~";
           };
         };
-      };
+        on_attach.__raw = ''
+          function(bufnr)
+            local gitsigns = require 'gitsigns'
 
-      lazyLoad = lib.mkIf config.plugins.lz-n.enable {
-        enable = true;
-        settings = {
-          # LazyFile is a shorthand that lazy.nvim uses
-          event = [
-            "BufReadPost"
-            "BufWritePost"
-            "BufNewFile"
-          ];
-          # NOTE: add gitsigns recommended keymaps if you are interested
-          # https://nix-community.github.io/nixvim/keymaps/index.html
-          keys = [
-            # Navigation
-            {
-              __unkeyed-1 = "]c";
-              __unkeyed-3.__raw =
-                # lua
-                ''
-                  function()
-                    if vim.wo.diff then
-                      vim.cmd.normal { ']c', bang = true }
-                    else
-                      require('gitsigns').nav_hunk 'next'
-                    end
-                  end
-                '';
-              mode = "n";
-              desc = "Jump to next git [C]hange";
-            }
-            {
-              __unkeyed-1 = "[c";
-              __unkeyed-3.__raw =
-                # lua
-                ''
-                  function()
-                    if vim.wo.diff then
-                      vim.cmd.normal { '[c', bang = true }
-                    else
-                      require('gitsigns').nav_hunk 'prev'
-                    end
-                  end
-                '';
-              mode = "n";
-              desc = "Jump to previous git [C]hange";
-            }
-            # Actions
-            # visual mode
-            {
-              __unkeyed-1 = "<leader>hs";
-              __unkeyed-3.__raw =
-                # lua
-                ''
-                  function()
-                    require('gitsigns').stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-                  end
-                '';
-              mode = "v";
-              desc = "stage git hunk";
-            }
-            {
-              __unkeyed-1 = "<leader>hr";
-              __unkeyed-3.__raw =
-                # lua
-                ''
-                  function()
-                    require('gitsigns').reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
-                  end
-                '';
-              mode = "v";
-              desc = "reset git hunk";
-            }
-            # normal mode
-            {
-              __unkeyed-1 = "<leader>hs";
-              __unkeyed-3.__raw =
-                # lua
-                ''
-                  function()
-                    require('gitsigns').stage_hunk()
-                  end
-                '';
-              mode = "n";
-              desc = "git [s]tage hunk";
-            }
-            {
-              __unkeyed-1 = "<leader>hr";
-              __unkeyed-3.__raw =
-                # lua
-                ''
-                  function()
-                    require('gitsigns').reset_hunk()
-                  end
-                '';
-              mode = "n";
-              desc = "git [r]eset hunk";
-            }
-            {
-              __unkeyed-1 = "<leader>hS";
-              __unkeyed-3.__raw =
-                # lua
-                ''
-                  function()
-                    require('gitsigns').stage_buffer()
-                  end
-                '';
-              mode = "n";
-              desc = "git [S]tage buffer";
-            }
-            {
-              __unkeyed-1 = "<leader>hu";
-              __unkeyed-3.__raw =
-                # lua
-                ''
-                  function()
-                    require('gitsigns').undo_stage_hunk()
-                  end
-                '';
-              mode = "n";
-              desc = "git [u]ndo stage hunk";
-            }
-            {
-              __unkeyed-1 = "<leader>hR";
-              __unkeyed-3.__raw =
-                # lua
-                ''
-                  function()
-                    require('gitsigns').reset_buffer()
-                  end
-                '';
-              mode = "n";
-              desc = "git [R]eset buffer";
-            }
-            {
-              __unkeyed-1 = "<leader>hp";
-              __unkeyed-3.__raw =
-                # lua
-                ''
-                  function()
-                    require('gitsigns').preview_hunk()
-                  end
-                '';
-              mode = "n";
-              desc = "git [p]review hunk";
-            }
-            {
-              __unkeyed-1 = "<leader>hb";
-              __unkeyed-3.__raw =
-                # lua
-                ''
-                  function()
-                    require('gitsigns').blame_line()
-                  end
-                '';
-              mode = "n";
-              desc = "git [b]lame line";
-            }
-            {
-              __unkeyed-1 = "<leader>hd";
-              __unkeyed-3.__raw =
-                # lua
-                ''
-                  function()
-                    require('gitsigns').diffthis()
-                  end
-                '';
-              mode = "n";
-              desc = "git [d]iff against index";
-            }
-            {
-              __unkeyed-1 = "<leader>hD";
-              __unkeyed-3.__raw =
-                # lua
-                ''
-                  function()
-                    require('gitsigns').diffthis '@'
-                  end
-                '';
-              mode = "n";
-              desc = "git [D]iff against last commit";
-            }
-            # Toggles
-            {
-              __unkeyed-1 = "<leader>tb";
-              __unkeyed-3.__raw =
-                # lua
-                ''
-                  function()
-                    require('gitsigns').toggle_current_line_blame()
-                  end
-                '';
-              mode = "n";
-              desc = "[T]oggle git show [b]lame line";
-            }
-            {
-              __unkeyed-1 = "<leader>tD";
-              __unkeyed-3.__raw =
-                # lua
-                ''
-                  function()
-                    require('gitsigns').toggle_deleted()
-                  end
-                '';
-              mode = "n";
-              desc = "[T]oggle git show [D]eleted";
-            }
-          ];
-        };
+            local function map(mode, l, r, opts)
+              opts = opts or {}
+              opts.buffer = bufnr
+              vim.keymap.set(mode, l, r, opts)
+            end
+
+            -- Navigation
+            map('n', ']c', function()
+              if vim.wo.diff then
+                vim.cmd.normal { ']c', bang = true }
+              else
+                gitsigns.nav_hunk 'next'
+              end
+            end, { desc = 'Jump to next git [c]hange' })
+
+            map('n', '[c', function()
+              if vim.wo.diff then
+                vim.cmd.normal { '[c', bang = true }
+              else
+                gitsigns.nav_hunk 'prev'
+              end
+            end, { desc = 'Jump to previous git [c]hange' })
+
+            -- Actions (visual mode)
+            map('v', '<leader>hs', function() gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' } end,
+              { desc = 'git [s]tage hunk' })
+            map('v', '<leader>hr', function() gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' } end,
+              { desc = 'git [r]eset hunk' })
+
+            -- Actions (normal mode)
+            map('n', '<leader>hs', gitsigns.stage_hunk, { desc = 'git [s]tage hunk' })
+            map('n', '<leader>hr', gitsigns.reset_hunk, { desc = 'git [r]eset hunk' })
+            map('n', '<leader>hS', gitsigns.stage_buffer, { desc = 'git [S]tage buffer' })
+            map('n', '<leader>hu', gitsigns.undo_stage_hunk, { desc = 'git [u]ndo stage hunk' })
+            map('n', '<leader>hR', gitsigns.reset_buffer, { desc = 'git [R]eset buffer' })
+            map('n', '<leader>hp', gitsigns.preview_hunk, { desc = 'git [p]review hunk' })
+            map('n', '<leader>hb', gitsigns.blame_line, { desc = 'git [b]lame line' })
+            map('n', '<leader>hd', gitsigns.diffthis, { desc = 'git [d]iff against index' })
+            map('n', '<leader>hD', function() gitsigns.diffthis '@' end, { desc = 'git [D]iff against last commit' })
+
+            -- Toggles
+            map('n', '<leader>tb', gitsigns.toggle_current_line_blame, { desc = '[T]oggle git show [b]lame line' })
+            map('n', '<leader>tD', gitsigns.preview_hunk_inline, { desc = '[T]oggle git show [D]eleted' })
+          end
+        '';
       };
     };
   };

@@ -4,7 +4,7 @@
   ...
 }:
 let
-  name = "lualine";
+  name = "nvim-tmux-navigation";
   cfg = config.nixvim.plugins.custom.${name};
 in
 {
@@ -17,13 +17,13 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # https://github.com/nvim-lualine/lualine.nvim
-    plugins.lualine = {
+    # https://github.com/christoomey/vim-tmux-navigator
+    # (matches dotfiles' nvim-tmux-navigation behavior: C-h/j/k/l across tmux panes + nvim splits)
+    plugins.tmux-navigator = {
       enable = true;
       settings = {
-        options = {
-          theme = "auto";
-        };
+        # Disable when pane is zoomed (matches dotfiles disable_when_zoomed = true)
+        disable_when_zoomed = 1;
       };
     };
   };

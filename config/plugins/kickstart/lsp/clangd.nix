@@ -21,14 +21,7 @@ in
     plugins = {
       lsp.servers.clangd = {
         enable = true;
-        # NOTE: add options as I need
       };
-
-      conform-nvim.settings.formattersByFt =
-        lib.mkIf config.nixvim.plugins.kickstart.conform-nvim.enable
-          {
-            cpp = [ "clang-format" ];
-          };
 
       treesitter.grammarPackages =
         with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
@@ -43,11 +36,11 @@ in
     ];
 
     keymaps = [
-      # Switch between source and header
       {
         mode = "n";
         key = "<M-o>";
         action = "<cmd>LspClangdSwitchSourceHeader<CR>";
+        options.desc = "Switch between source and header";
       }
     ];
   };

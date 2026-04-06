@@ -5,7 +5,7 @@
   ...
 }:
 let
-  name = "yamlls";
+  name = "lua_ls";
   cfg = config.nixvim.lsp.languages.${name};
 in
 {
@@ -19,25 +19,15 @@ in
 
   config = lib.mkIf cfg.enable {
     plugins = {
-      lsp.servers.yamlls = {
+      lsp.servers.lua-ls = {
         enable = true;
-        # NOTE: add options as I need
       };
-
-      conform-nvim.settings.formattersByFt =
-        lib.mkIf config.nixvim.plugins.kickstart.conform-nvim.enable
-          {
-            yamlls = [ "yamlfmt" ];
-          };
 
       treesitter.grammarPackages =
         with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-          yaml
+          lua
+          luadoc
         ];
     };
-
-    extraPackages = with pkgs; [
-      yamlfmt
-    ];
   };
 }

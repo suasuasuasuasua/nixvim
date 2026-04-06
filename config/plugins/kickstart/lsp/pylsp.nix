@@ -21,28 +21,12 @@ in
     plugins = {
       lsp.servers.pylsp = {
         enable = true;
-        # NOTE: add options as I need
       };
-
-      conform-nvim.settings.formattersByFt =
-        lib.mkIf config.nixvim.plugins.kickstart.conform-nvim.enable
-          {
-            # Use stop_after_first to run only the first available formatter
-            python = {
-              __unkeyed-1 = "black";
-              __unkeyed-2 = "ruff";
-              stop_after_first = true;
-            };
-          };
 
       treesitter.grammarPackages =
         with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
           python
         ];
     };
-
-    extraPackages = with pkgs; [
-      black
-    ];
   };
 }

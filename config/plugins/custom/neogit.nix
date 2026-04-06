@@ -4,7 +4,7 @@
   ...
 }:
 let
-  name = "twilight";
+  name = "neogit";
   cfg = config.nixvim.plugins.custom.${name};
 in
 {
@@ -17,11 +17,20 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # https://github.com/folke/twilight.nvim
-    plugins.twilight = {
+    # https://github.com/NeogitOrg/neogit/
+    plugins.neogit = {
       enable = true;
-
-      # NOTE: disable lazy loading so Zen Mode can auto call this
     };
+
+    keymaps = [
+      {
+        mode = "n";
+        key = "<Leader>gg";
+        action = "<CMD>Neogit<CR>";
+        options = {
+          desc = "Show Neogit UI";
+        };
+      }
+    ];
   };
 }

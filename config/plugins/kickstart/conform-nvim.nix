@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
 let
@@ -22,42 +23,38 @@ in
     plugins.conform-nvim = {
       enable = true;
       settings = {
-        notifyOnError = false;
-        format_on_save = {
-          timeout_ms = 100;
-          lsp_format = "fallback"; # TODO: performance issues?
-        };
-        formattersByFt = {
-          # Use the "_" filetype to run formatters on filetypes that don't
-          # have other formatters configured.
-          "_" = [
-            "trim_whitespace"
-            "trim_newlines"
-          ];
-        };
-      };
-
-      lazyLoad = lib.mkIf config.plugins.lz-n.enable {
-        enable = true;
-        settings = {
-          event = [ "BufWritePre" ];
-          cmd = [ "ConformInfo" ];
-          keys = [
-            {
-              __unkeyed-1 = "<leader>f";
-              __unkeyed-3.__raw =
-                # lua
-                ''
-                  function()
-                    require('conform').format { async = true, lsp_format = 'fallback' }
-                  end
-                '';
-              mode = "";
-              desc = "[F]ormat buffer";
-            }
-          ];
+        notify_on_error = false;
+        format_on_save.__raw = ''
+          function(bufnr)
+            local disable_filetypes = { c = true, cpp = true }
+            if disable_filetypes[vim.bo[bufnr].filetype] then
+              return nil
+            else
+              return { timeout_ms = 500, lsp_format = 'fallback' }
+            end
+          end
+        '';
+        formatters_by_ft = {
+          lua = [ "stylua" ];
         };
       };
     };
+
+    keymaps = [
+      {
+        mode = "";
+        key = "<leader>f";
+        action.__raw = ''
+          function()
+            require('conform').format { async = true, lsp_format = 'fallback' }
+          end
+        '';
+        options.desc = "[F]ormat buffer";
+      }
+    ];
+
+    extraPackages = with pkgs; [
+      stylua
+    ];
   };
 }

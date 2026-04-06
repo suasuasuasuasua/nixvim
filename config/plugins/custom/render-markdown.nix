@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
   config,
   ...
 }:
@@ -23,29 +22,10 @@ in
       enable = true;
 
       settings = {
-        completions = {
-          blink = {
-            enabled = true;
-          };
-          lsp = {
-            enabled = true;
-          };
-        };
         latex = {
-          enabled = false; # latex kinda annoying when bouncing around
-        };
-      };
-
-      lazyLoad = lib.mkIf config.plugins.lz-n.enable {
-        enable = true;
-        settings = {
-          ft = "markdown";
+          enabled = false;
         };
       };
     };
-
-    extraPackages = with pkgs; [
-      python312Packages.pylatexenc
-    ];
   };
 }

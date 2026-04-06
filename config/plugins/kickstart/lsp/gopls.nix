@@ -5,7 +5,7 @@
   ...
 }:
 let
-  name = "bashls";
+  name = "gopls";
   cfg = config.nixvim.lsp.languages.${name};
 in
 {
@@ -19,25 +19,20 @@ in
 
   config = lib.mkIf cfg.enable {
     plugins = {
-      lsp.servers.bashls = {
+      lsp.servers.gopls = {
         enable = true;
-        # NOTE: add options as I need
       };
-
-      conform-nvim.settings.formattersByFt =
-        lib.mkIf config.nixvim.plugins.kickstart.conform-nvim.enable
-          {
-            bash = [ "shfmt" ];
-          };
 
       treesitter.grammarPackages =
         with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-          bash
+          go
+          gomod
+          gosum
         ];
     };
 
     extraPackages = with pkgs; [
-      shfmt
+      go
     ];
   };
 }
