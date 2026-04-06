@@ -4,6 +4,8 @@
     ./plugins
 
     ./user
-    ./kickstart.nix
+    ./autocmd.nix
+    ./init.nix
+    ./keymaps.nix
   ];
 }
