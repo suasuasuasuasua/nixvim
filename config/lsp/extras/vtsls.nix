@@ -23,7 +23,7 @@ in
       conform-nvim.settings.formattersByFt =
         lib.mkIf config.nixvim.plugins.conform-nvim.enable
           {
-            javscript = [ "prettierd" ];
+            javascript = [ "prettierd" ];
             typescript = [ "prettierd" ];
           };
 

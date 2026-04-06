@@ -4,7 +4,7 @@
   ...
 }:
 let
-  name = "arial";
+  name = "aerial";
   cfg = config.nixvim.plugins.${name};
 in
 {
