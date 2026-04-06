@@ -292,13 +292,13 @@ in
         mode = "n";
         key = "<leader>s:";
         action.__raw = "function() require('mini.extra').pickers.history { scope = ':' } end";
-        options.desc = "[S]earch [N]eovim commands";
+        options.desc = "[S]earch [:] command history";
       }
       {
         mode = "n";
         key = "<leader>s/";
         action.__raw = "function() require('mini.extra').pickers.history { scope = '/' } end";
-        options.desc = "[S]earch [N]eovim search";
+        options.desc = "[S]earch [/] search history";
       }
     ];
   };
