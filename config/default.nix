@@ -1,7 +1,7 @@
 {
   imports = [
-    ./plugins/custom
-    ./plugins/kickstart
+    ./lsp
+    ./plugins
 
     ./user
     ./kickstart.nix
