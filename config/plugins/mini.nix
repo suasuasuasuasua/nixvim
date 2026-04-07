@@ -27,92 +27,71 @@ in
         # better around/inside textobjects
         ai = { };
 
-        # # key binding hints (replaces which-key)
-        # clue = {
-        #   triggers = [
-        #     {
-        #       mode = [
-        #         "n"
-        #         "x"
-        #       ];
-        #       keys = "<Leader>";
-        #     }
-        #     {
-        #       mode = "n";
-        #       keys = "[";
-        #     }
-        #     {
-        #       mode = "n";
-        #       keys = "]";
-        #     }
-        #     {
-        #       mode = "i";
-        #       keys = "<C-x>";
-        #     }
-        #     {
-        #       mode = [
-        #         "n"
-        #         "x"
-        #       ];
-        #       keys = "g";
-        #     }
-        #     {
-        #       mode = [
-        #         "n"
-        #         "x"
-        #       ];
-        #       keys = "'";
-        #     }
-        #     {
-        #       mode = [
-        #         "n"
-        #         "x"
-        #       ];
-        #       keys = "`";
-        #     }
-        #     {
-        #       mode = [
-        #         "n"
-        #         "x"
-        #       ];
-        #       keys = ''"'';
-        #     }
-        #     {
-        #       mode = [
-        #         "i"
-        #         "c"
-        #       ];
-        #       keys = "<C-r>";
-        #     }
-        #     {
-        #       mode = "n";
-        #       keys = "<C-w>";
-        #     }
-        #     {
-        #       mode = [
-        #         "n"
-        #         "x"
-        #       ];
-        #       keys = "z";
-        #     }
-        #   ];
-        #   clues.__raw = ''
-        #     {
-        #       require('mini.clue').gen_clues.square_brackets(),
-        #       require('mini.clue').gen_clues.builtin_completion(),
-        #       require('mini.clue').gen_clues.g(),
-        #       require('mini.clue').gen_clues.marks(),
-        #       require('mini.clue').gen_clues.registers(),
-        #       require('mini.clue').gen_clues.windows(),
-        #       require('mini.clue').gen_clues.z(),
-        #     }
-        #   '';
-        #   window = {
-        #     delay = 10;
-        #     scroll_down = "<C-d>";
-        #     scroll_up = "<C-u>";
-        #   };
-        # };
+        # key binding hints (replaces which-key)
+        clue = {
+          triggers = [
+            {
+              mode = "n"; # x
+              keys = "<Leader>";
+            }
+            {
+              mode = "n";
+              keys = "[";
+            }
+            {
+              mode = "n";
+              keys = "]";
+            }
+            {
+              mode = "i";
+              keys = "<C-x>";
+            }
+            {
+              mode = "n"; # x
+              keys = "g";
+            }
+            {
+              mode = "n"; # x
+              keys = "'";
+            }
+            {
+              mode = "n"; # x
+              keys = "`";
+            }
+            {
+              mode = "n"; # x
+              keys = ''"'';
+            }
+            {
+              mode = "i"; # c
+              keys = "<C-r>";
+            }
+            {
+              mode = "n";
+              keys = "<C-w>";
+            }
+            {
+              mode = "n"; # x
+              keys = "z";
+            }
+          ];
+          clues.__raw = ''
+            {
+              require('mini.clue').gen_clues.square_brackets(),
+              require('mini.clue').gen_clues.builtin_completion(),
+              require('mini.clue').gen_clues.g(),
+              require('mini.clue').gen_clues.marks(),
+              require('mini.clue').gen_clues.registers(),
+              require('mini.clue').gen_clues.windows(),
+              require('mini.clue').gen_clues.z(),
+            }
+          '';
+          window = {
+            delay = 10;
+            scroll_down = "<C-d>";
+            scroll_up = "<C-u>";
+          };
+        };
 
         # # command-line replacement
         # cmdline = { };
