@@ -19,7 +19,7 @@ in
 
   config = lib.mkIf cfg.enable {
     plugins = {
-      lsp.servers.lua-ls = {
+      lsp.servers.lua_ls = {
         enable = true;
       };
 

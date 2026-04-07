@@ -20,7 +20,7 @@
     colorcolumn = "80";
     complete = ".,w,b,kspell";
     completeopt = "menuone,noselect,fuzzy,nosort";
-    completetimeout = 100;
+    # completetimeout = 100;
     confirm = true;
     cursorline = true;
     cursorlineopt = "screenline,number";
@@ -44,9 +44,9 @@
     mouse = "a";
     mousescroll = "ver:25,hor:6";
     number = true;
-    pumborder = "single";
-    pumheight = 10;
-    pummaxwidth = 100;
+    # pumborder = "single";
+    # pumheight = 10;
+    # pummaxwidth = 100;
     ruler = false;
     scrolloff = 10;
     shada = "'100,<50,s10,:1000,/100,@100,h";
