@@ -9,10 +9,8 @@ nvim.extend {
       inherit (nvim) options;
       opts = options.nixvim;
 
-      enable = false;
-
       lsp-languages = lib.attrNames opts.lsp.languages;
-      custom-plugins = lib.attrNames opts.plugins.custom;
+      custom-plugins = lib.attrNames opts.plugins;
     in
     {
       colorscheme.enable = true;
@@ -22,22 +20,20 @@ nvim.extend {
           acc: name:
           {
             ${name} = {
-              inherit enable;
+              enable = true;
             };
           }
           // acc
         ) { } lsp-languages;
       };
-      plugins = {
-        custom = builtins.foldl' (
-          acc: name:
-          {
-            ${name} = {
-              inherit enable;
-            };
-          }
-          // acc
-        ) { } custom-plugins;
-      };
+      plugins = builtins.foldl' (
+        acc: name:
+        {
+          ${name} = {
+            enable = false;
+          };
+        }
+        // acc
+      ) { } custom-plugins;
     };
 }

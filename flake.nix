@@ -36,14 +36,14 @@
         };
         meta = {
           description = "My nixvim configuration";
-          homepage = "https://github.com/Losses/rune";
+          homepage = "https://github.com/suasuasuasuasua/nixvim";
           license = with nixpkgs.lib.licenses; [
             mit
           ];
           maintainers = [
             {
               name = "Justin Hoang";
-              email = "justinhoang@sua.sh";
+              email = "justinhoang@sua.dev";
               github = "suasuasuasuasua";
               githubId = 72476123;
             }
@@ -132,18 +132,13 @@
               { }
               # in order of plugin and configuration complexity
               [
-                # Disable EVERYTHING (kickstart and custom)
+                # Disable EVERYTHING
                 "plain"
                 # Disable all configurations (lsps, plugins, etc.)
                 "minimal"
-                # The default configuration has the kickstart configuration and
+                # The default configuration has the essential configuration and
                 # a few essential custom plugins
                 "default"
-                # Enable all configurations (lsps, plugins, etc.)
-                # WARNING: some plugins require additional configuration, so make
-                # sure to `.extend` the derivation that you choose appropriately
-                # - `obsidian.nvim` needs workspaces for example
-                "full"
               ];
 
         };
