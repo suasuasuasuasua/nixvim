@@ -20,15 +20,6 @@ in
     # https://github.com/direnv/direnv.vim
     plugins.direnv = {
       enable = true;
-
-      # TODO: available in 26.05
-      # lazyLoad = lib.mkIf config.plugins.lz-n.enable {
-      #   enable = true;
-      #
-      #   settings = {
-      #     event = [ "DeferredUIEnter" ];
-      #   };
-      # };
     };
   };
 }

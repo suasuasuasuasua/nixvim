@@ -94,11 +94,6 @@ in
           "<C-u>" = "actions.preview_scroll_up";
         };
       };
-
-      # NOTE: not recommended according to GitHub
-      lazyLoad = {
-        enable = false;
-      };
     };
 
     plugins.oil-git-status = {

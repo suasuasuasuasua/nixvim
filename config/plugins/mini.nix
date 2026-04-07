@@ -162,43 +162,42 @@ in
         # trailing whitespace (replaces trim.nvim)
         trailspace = { };
       };
+
+      luaConfig.post =
+        # lua
+        ''
+          -- mini.icons: mock web-devicons and tweak LSP kinds
+          MiniIcons.tweak_lsp_kind()
+
+          -- mini.snippets: start LSP server for snippet completion
+          MiniSnippets.start_lsp_server()
+
+          -- mini.pick: custom registry pickers
+          local pick = require('mini.pick')
+          pick.registry.registry = function()
+            local items = vim.tbl_keys(pick.registry)
+            table.sort(items)
+            local source = { items = items, name = 'Registry', choose = function() end }
+            local chosen_picker_name = pick.start { source = source }
+            if chosen_picker_name == nil then return end
+            return pick.registry[chosen_picker_name]()
+          end
+          pick.registry.files = function(local_opts)
+            local opts = { source = { cwd = local_opts.cwd } }
+            local_opts.cwd = nil
+            return pick.builtin.files(local_opts, opts)
+          end
+
+          -- mini.surround: remap Visual mode surround and line surround
+          vim.keymap.del('x', 'ys')
+          vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
+          vim.keymap.set('n', 'yss', 'ys_', { remap = true })
+        '';
     };
 
     # friendly-snippets provides a variety of premade snippets for mini.snippets
     # https://github.com/rafamadriz/friendly-snippets
     plugins.friendly-snippets.enable = true;
-
-    extraConfigLua =
-      # lua
-      ''
-        -- mini.icons: mock web-devicons and tweak LSP kinds
-        MiniIcons.mock_nvim_web_devicons()
-        MiniIcons.tweak_lsp_kind()
-
-        -- mini.snippets: start LSP server for snippet completion
-        MiniSnippets.start_lsp_server()
-
-        -- mini.pick: custom registry pickers
-        local pick = require('mini.pick')
-        pick.registry.registry = function()
-          local items = vim.tbl_keys(pick.registry)
-          table.sort(items)
-          local source = { items = items, name = 'Registry', choose = function() end }
-          local chosen_picker_name = pick.start { source = source }
-          if chosen_picker_name == nil then return end
-          return pick.registry[chosen_picker_name]()
-        end
-        pick.registry.files = function(local_opts)
-          local opts = { source = { cwd = local_opts.cwd } }
-          local_opts.cwd = nil
-          return pick.builtin.files(local_opts, opts)
-        end
-
-        -- mini.surround: remap Visual mode surround and line surround
-        vim.keymap.del('x', 'ys')
-        vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
-        vim.keymap.set('n', 'yss', 'ys_', { remap = true })
-      '';
 
     # mini.pick keymaps
     keymaps = [
@@ -220,13 +219,12 @@ in
         action.__raw = "function() require('mini.pick').registry.files { cwd = vim.fn.getcwd() } end";
         options.desc = "[S]earch [F]iles";
       }
-      # TODO: define the registry properly
-      # {
-      #   mode = "n";
-      #   key = "<leader>ss";
-      #   action.__raw = "require('mini.pick').registry.registry";
-      #   options.desc = "[S]earch [S]elect Registry";
-      # }
+      {
+        mode = "n";
+        key = "<leader>ss";
+        action.__raw = "require('mini.pick').registry.registry";
+        options.desc = "[S]earch [S]elect Registry";
+      }
       {
         mode = "n";
         key = "<leader>sg";
