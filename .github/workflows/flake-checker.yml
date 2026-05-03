@@ -5,7 +5,7 @@ on:
 jobs:
   build:
     name: Check inputs
-    runs-on: ubuntu-latest
+    runs-on: nix
     steps:
       - uses: actions/checkout@v4
       - name: Check Nix flake inputs
