@@ -7,8 +7,21 @@ jobs:
     runs-on: nix
     steps:
       - uses: actions/checkout@v4
-      # build the package
+      - run: |
+          mkdir -p /etc/nix
+          printf 'build-users-group =\nsandbox = relaxed\nexperimental-features = nix-command flakes\n' > /etc/nix/nix.conf
+          echo "=== nix version ==="
+          nix --version
+          echo "=== NIX_REMOTE env ==="
+          echo "${NIX_REMOTE:-<unset>}"
+          echo "=== /homeless-shelter after earlier builds? ==="
+          ls -la /homeless-shelter 2>/dev/null || echo "not found"
+      # NIX_CONFIG overrides nix.conf at highest precedence, ensuring build-users-group stays empty
+      # even if earlier __noChroot luarocks builds create /homeless-shelter (HOME default),
+      # buildUser will be null so the home dir check is skipped entirely
       - run: nix build .#default .#minimal .#plain
+        env:
+          NIX_CONFIG: "build-users-group =\nsandbox = relaxed\nexperimental-features = nix-command flakes"
       - uses: cachix/cachix-action@v14
         with:
           name: suasuasuasuasua # cache name
