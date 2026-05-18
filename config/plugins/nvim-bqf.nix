@@ -4,7 +4,7 @@
   ...
 }:
 let
-  name = "nvim-origami";
+  name = "nvim-bqf";
   cfg = config.nixvim.plugins.${name};
 in
 {
@@ -17,10 +17,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # https://github.com/chrisgrieser/nvim-origami
-    plugins.origami = {
+    # Better quickfix window
+    # https://github.com/kevinhwang91/nvim-bqf
+    plugins.nvim-bqf = {
       enable = true;
-      settings = { };
     };
   };
 }

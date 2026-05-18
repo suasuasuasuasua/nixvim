@@ -148,9 +148,6 @@ in
       };
       virtual_text = true;
       virtual_lines = false;
-      jump = {
-        on_jump = true;
-      };
     };
 
     autoGroups = {

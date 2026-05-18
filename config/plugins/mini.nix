@@ -93,8 +93,8 @@ in
           };
         };
 
-        # # command-line replacement
-        # cmdline = { };
+        # command-line replacement
+        cmdline = { };
 
         # completion (replaces blink-cmp/nvim-cmp)
         completion = {
@@ -270,13 +270,13 @@ in
       {
         mode = "n";
         key = "<leader>s:";
-        action.__raw = "function() require('mini.extra').pickers.history { scope = ':' } end";
+        action.__raw = "function() require('mini.pick').registry.history { scope = ':' } end";
         options.desc = "[S]earch [:] command history";
       }
       {
         mode = "n";
         key = "<leader>s/";
-        action.__raw = "function() require('mini.extra').pickers.history { scope = '/' } end";
+        action.__raw = "function() require('mini.pick').registry.history { scope = '/' } end";
         options.desc = "[S]earch [/] search history";
       }
     ];
