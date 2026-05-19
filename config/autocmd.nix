@@ -54,7 +54,7 @@
             if not vim.b[args.buf].view_activated then
               local buftype = vim.bo[args.buf].buftype
               local filetype = vim.bo[args.buf].filetype
-              if buftype == '' and filetype ~= '' then
+              if buftype == "" and filetype ~= "" then
                 vim.b[args.buf].view_activated = true
                 pcall(vim.cmd.loadview)
               end

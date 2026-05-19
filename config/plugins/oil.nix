@@ -159,42 +159,44 @@ in
     };
 
     # Define oil_run_on_selection as a global so oil keymaps can reference it
-    extraConfigLua = ''
-      _G.oil_run_on_selection = function(opts)
-        opts = opts or {}
-        local oil = require("oil")
-        local bufnr = vim.api.nvim_get_current_buf()
+    extraConfigLua =
+      # lua
+      ''
+        _G.oil_run_on_selection = function(opts)
+          opts = opts or {}
+          local oil = require("oil")
+          local bufnr = vim.api.nvim_get_current_buf()
 
-        local start_line = vim.fn.line("v")
-        local end_line = vim.fn.line(".")
-        if start_line > end_line then
-          start_line, end_line = end_line, start_line
-        end
-
-        local dir = oil.get_current_dir()
-        local paths = {}
-        for lnum = start_line, end_line do
-          local entry = oil.get_entry_on_line(bufnr, lnum)
-          if entry then
-            table.insert(paths, vim.fn.fnameescape(dir .. entry.name))
+          local start_line = vim.fn.line("v")
+          local end_line = vim.fn.line(".")
+          if start_line > end_line then
+            start_line, end_line = end_line, start_line
           end
-        end
-        if #paths == 0 then return end
 
-        local prefix = opts.prefix or ""
-        vim.ui.input({ prompt = opts.prompt or "Cmd ({} = file): " }, function(cmd)
-          if not cmd or cmd == "" then return end
-          cmd = prefix .. cmd
-          for _, path in ipairs(paths) do
-            local expanded = cmd:find("{}", 1, true)
-                and cmd:gsub("{}", path)
-                or (cmd .. " " .. path)
-            vim.cmd(expanded)
-            require("oil.actions").refresh.callback()
+          local dir = oil.get_current_dir()
+          local paths = {}
+          for lnum = start_line, end_line do
+            local entry = oil.get_entry_on_line(bufnr, lnum)
+            if entry then
+              table.insert(paths, vim.fn.fnameescape(dir .. entry.name))
+            end
           end
-        end)
-      end
-    '';
+          if #paths == 0 then return end
+
+          local prefix = opts.prefix or ""
+          vim.ui.input({ prompt = opts.prompt or "Cmd ({} = file): " }, function(cmd)
+            if not cmd or cmd == "" then return end
+            cmd = prefix .. cmd
+            for _, path in ipairs(paths) do
+              local expanded = cmd:find("{}", 1, true)
+                  and cmd:gsub("{}", path)
+                  or (cmd .. " " .. path)
+              vim.cmd(expanded)
+              require("oil.actions").refresh.callback()
+            end
+          end)
+        end
+      '';
 
     keymaps = [
       {
