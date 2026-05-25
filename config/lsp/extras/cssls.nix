@@ -38,7 +38,7 @@ in
     };
 
     extraPackages = with pkgs; [
-      nodePackages.js-beautify
+      js-beautify
     ];
   };
 }

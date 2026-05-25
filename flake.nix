@@ -2,9 +2,11 @@
   description = "suasuasuasuasua's nixvim config";
 
   inputs = {
-    # use the latest stable branch
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-    nixvim.url = "github:nix-community/nixvim/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable"; # TODO: undo when 0.12 comes out
+    nixvim = {
+      url = "github:nix-community/nixvim/";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     flake-parts.url = "github:hercules-ci/flake-parts";
     git-hooks-nix = {
@@ -93,7 +95,7 @@
               # add the packages so the precommit-hook treefmt can find them
               settings.formatters = with pkgs; [
                 nixfmt-rfc-style
-                nodePackages.prettier
+                prettier
               ];
             };
 

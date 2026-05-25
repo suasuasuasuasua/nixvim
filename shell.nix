@@ -17,25 +17,16 @@ pkgs.mkShellNoCC {
   # add the packages from the git-hooks list too
   buildInputs = config.pre-commit.settings.enabledPackages;
   packages = with pkgs; [
-    # commands
-    just # command runner
-    vim-startuptime # proflie vim and neovim
-
-    # formatter
+    commitizen
+    git
+    just
+    markdownlint-cli
+    marksman
+    nil
+    nixd
+    nixfmt-rfc-style
+    prettier
     treefmt
-    nodePackages.prettier
-    nixfmt-rfc-style # nix formatter
-
-    # linters
-    markdownlint-cli # markdown linter
-
-    # lsp
-    nil # lsp 1
-    nixd # lsp 2
-    marksman # markdown
-
-    # source control
-    commitizen # templated commits and bumping
-    git # source control program
+    vim-startuptime
   ];
 }
