@@ -19,7 +19,7 @@
     breakindentopt = "list:-1";
     colorcolumn = "80";
     complete = ".,w,b,kspell";
-    completeopt = "menuone,popup,noinsert";
+    completeopt = "menuone,popup,noinsert,noselect,fuzzy";
     completetimeout = 100;
     confirm = true;
     cursorline = true;
@@ -42,7 +42,11 @@
     iskeyword = "@,48-57,_,192-255,-";
     linebreak = true;
     list = true;
-    listchars.__raw = "{ tab = '> ', trail = '-', nbsp = '+' }";
+    listchars = {
+      tab = "> ";
+      trail = "-";
+      nbsp = "+";
+    };
     mouse = "a";
     mousescroll = "ver:25,hor:6";
     number = true;
