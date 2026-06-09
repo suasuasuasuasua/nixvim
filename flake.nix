@@ -2,15 +2,11 @@
   description = "suasuasuasuasua's nixvim config";
 
   inputs = {
-    # use the latest stable branch
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
-    nixvim.url = "github:nix-community/nixvim/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
+    nixvim.url = "github:nix-community/nixvim/nixos-26.05";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
-    git-hooks-nix = {
-      url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    git-hooks-nix.url = "github:cachix/git-hooks.nix";
   };
 
   outputs =
@@ -87,28 +83,27 @@
           };
 
           # enable treefmt as the formatter
-          pre-commit.settings.hooks = {
-            treefmt = {
-              enable = true;
-              # add the packages so the precommit-hook treefmt can find them
-              settings.formatters = with pkgs; [
-                nixfmt-rfc-style
-                nodePackages.prettier
-              ];
+          pre-commit.settings = {
+            hooks = {
+              treefmt = {
+                enable = true;
+                # add the packages so the precommit-hook treefmt can find them
+                settings.formatters = with pkgs; [
+                  nixfmt
+                  prettier
+                ];
+              };
+              deadnix.enable = true;
+              flake-checker.enable = false;
+              statix.enable = true;
+              commitizen.enable = true;
+              ripsecrets.enable = true;
+              check-added-large-files.enable = true;
+              check-merge-conflicts.enable = true;
+              end-of-file-fixer.enable = true;
+              trim-trailing-whitespace.enable = true;
             };
-
-            deadnix.enable = true; # remove any unused variabes and imports
-            flake-checker.enable = false; # run `flake check`
-            statix.enable = true; # check "good practices" for nix
-
-            commitizen.enable = true;
-            ripsecrets.enable = true;
-
-            # General
-            check-added-large-files.enable = true; # warning about large files (lfs?)
-            check-merge-conflicts.enable = true; # don't commit merge conflicts
-            end-of-file-fixer.enable = true; # add a line at the end of the file
-            trim-trailing-whitespace.enable = true; # trim trailing whitespace
+            package = pkgs.prek;
           };
           formatter = pkgs.treefmt;
 

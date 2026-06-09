@@ -93,8 +93,8 @@ in
           };
         };
 
-        # # command-line replacement
-        # cmdline = { };
+        # command-line replacement
+        cmdline = { };
 
         # completion (replaces blink-cmp/nvim-cmp)
         completion = {
@@ -110,6 +110,10 @@ in
 
         # icons (replaces web-devicons)
         icons = { };
+
+        # TODO: not available on https://nix-community.github.io/nixvim/ yet
+        # # input (replaces vim.ui.input)
+        # input = { };
 
         # indentation scope (replaces indent-blankline)
         indentscope = {
@@ -183,9 +187,13 @@ in
             return pick.registry[chosen_picker_name]()
           end
           pick.registry.files = function(local_opts)
-            local opts = { source = { cwd = local_opts.cwd } }
-            local_opts.cwd = nil
-            return pick.builtin.files(local_opts, opts)
+            local_opts = local_opts or {}
+            local cwd = local_opts.cwd or vim.fn.getcwd()
+            if vim.fn.executable('rg') == 1 then
+              local command = { 'rg', '--files', '--hidden', '--glob', '!.git' }
+              return pick.builtin.cli({ command = command }, { source = { name = 'Files', cwd = cwd } })
+            end
+            return pick.builtin.files(local_opts, { source = { cwd = cwd } })
           end
 
           -- mini.surround: remap Visual mode surround and line surround
@@ -270,13 +278,13 @@ in
       {
         mode = "n";
         key = "<leader>s:";
-        action.__raw = "function() require('mini.extra').pickers.history { scope = ':' } end";
+        action.__raw = "function() require('mini.pick').registry.history { scope = ':' } end";
         options.desc = "[S]earch [:] command history";
       }
       {
         mode = "n";
         key = "<leader>s/";
-        action.__raw = "function() require('mini.extra').pickers.history { scope = '/' } end";
+        action.__raw = "function() require('mini.pick').registry.history { scope = '/' } end";
         options.desc = "[S]earch [/] search history";
       }
     ];

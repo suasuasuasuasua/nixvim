@@ -19,18 +19,20 @@
     breakindentopt = "list:-1";
     colorcolumn = "80";
     complete = ".,w,b,kspell";
-    completeopt = "menuone,noselect,fuzzy,nosort";
-    # completetimeout = 100;
+    completeopt = "menuone,popup,noinsert,noselect,fuzzy";
+    completetimeout = 100;
     confirm = true;
     cursorline = true;
     cursorlineopt = "screenline,number";
     expandtab = true;
+    exrc = true;
     foldcolumn = "1";
     foldenable = true;
     foldlevel = 99;
     foldlevelstart = 99;
     foldnestmax = 10;
     foldtext = "";
+    viewoptions = "folds,cursor,curdir,slash,unix";
     formatlistpat = ''^\s*[0-9\-\+\*]\+[\.\)]*\s\+'';
     formatoptions = "rqnl1j";
     ignorecase = true;
@@ -40,13 +42,17 @@
     iskeyword = "@,48-57,_,192-255,-";
     linebreak = true;
     list = true;
-    listchars.__raw = "{ tab = '> ', trail = '-', nbsp = '+' }";
+    listchars = {
+      tab = "> ";
+      trail = "-";
+      nbsp = "+";
+    };
     mouse = "a";
     mousescroll = "ver:25,hor:6";
     number = true;
-    # pumborder = "single";
-    # pumheight = 10;
-    # pummaxwidth = 100;
+    pumborder = "single";
+    pumheight = 10;
+    pummaxwidth = 100;
     ruler = false;
     scrolloff = 10;
     shada = "'100,<50,s10,:1000,/100,@100,h";
@@ -63,7 +69,7 @@
     splitkeep = "screen";
     splitright = true;
     swapfile = false;
-    switchbuf = "usetab";
+    switchbuf = "usetab,uselast";
     tabstop = 2;
     timeoutlen = 300;
     undofile = true;
@@ -77,6 +83,10 @@
     # lua
     ''
       vim.o.undodir = os.getenv('HOME') .. '/.vim/undodir'
+
+      -- Load built-in optional packages (neovim 0.12+)
+      vim.cmd 'packadd nvim.difftool'
+      vim.cmd 'packadd nvim.undotree'
     '';
 
   # The line beneath this is called `modeline`. See `:help modeline`
