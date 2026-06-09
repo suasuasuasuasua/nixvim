@@ -89,26 +89,26 @@ in
           # copy the current file path
           "y." = "actions.copy_entry_path";
 
-          # scroll the preview window (matching dotfiles: C-f/C-b)
+          # scroll the preview window
           "<C-f>" = "actions.preview_scroll_down";
           "<C-b>" = "actions.preview_scroll_up";
 
-          # toggle detailed file view (permissions, size, mtime)
+          # toggle detail columns
           "gd" = {
             desc = "Toggle file detail view";
             callback.__raw = ''
               function()
-                local cols = require("oil").get_columns()
-                if #cols > 1 then
-                  require("oil").set_columns({ "icon" })
-                else
+                _oil_detail = not _oil_detail
+                if _oil_detail then
                   require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
+                else
+                  require("oil").set_columns({ "icon" })
                 end
               end
             '';
           };
 
-          # find files in current oil directory via mini.pick
+          # open mini.pick files in the current oil directory
           "<leader>sf" = {
             __unkeyed-1.__raw = ''
               function()
@@ -124,14 +124,7 @@ in
 
           # run shell/Ex commands on selected files
           "<leader>:" = {
-            callback.__raw = ''
-              function()
-                oil_run_on_selection({
-                  prefix = "!",
-                  prompt = "Shell cmd ({} = file): ",
-                })
-              end
-            '';
+            callback.__raw = ''function() _oil_run_on_selection({ prefix = "!", prompt = "Shell cmd ({} = file): " }) end'';
             mode = [
               "n"
               "v"
@@ -139,11 +132,7 @@ in
             desc = "Run shell command on selected files";
           };
           "<leader><leader>:" = {
-            callback.__raw = ''
-              function()
-                oil_run_on_selection({ prompt = "Ex cmd ({} = file): " })
-              end
-            '';
+            callback.__raw = ''function() _oil_run_on_selection({ prompt = "Ex cmd ({} = file): " }) end'';
             mode = [
               "n"
               "v"
@@ -158,11 +147,12 @@ in
       enable = true;
     };
 
-    # Define oil_run_on_selection as a global so oil keymaps can reference it
     extraConfigLua =
       # lua
       ''
-        _G.oil_run_on_selection = function(opts)
+        _oil_detail = false
+
+        _oil_run_on_selection = function(opts)
           opts = opts or {}
           local oil = require("oil")
           local bufnr = vim.api.nvim_get_current_buf()
@@ -203,6 +193,14 @@ in
         mode = "n";
         key = "-";
         action = "<CMD>Oil<CR>";
+        options = {
+          desc = "Open parent directory";
+        };
+      }
+      {
+        mode = "n";
+        key = "_";
+        action = "<CMD>Oil --float<CR>";
         options = {
           desc = "Open parent directory";
         };

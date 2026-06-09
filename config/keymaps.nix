@@ -45,28 +45,6 @@
       options.desc = "Move focus to the upper window";
     }
 
-    # Insert mode escape shortcuts
-    {
-      mode = "i";
-      key = "jk";
-      action = "<Esc>";
-    }
-    {
-      mode = "i";
-      key = "jK";
-      action = "<Esc>";
-    }
-    {
-      mode = "i";
-      key = "Jk";
-      action = "<Esc>";
-    }
-    {
-      mode = "i";
-      key = "JK";
-      action = "<Esc>";
-    }
-
     # Make
     {
       mode = "n";
