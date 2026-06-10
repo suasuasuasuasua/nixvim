@@ -18,8 +18,6 @@ in
 
   config = lib.mkIf cfg.enable {
     # Detect tabstop and shiftwidth automatically
-    plugins.guess-indent = {
-      enable = true;
-    };
+    plugins.guess-indent.enable = true;
   };
 }

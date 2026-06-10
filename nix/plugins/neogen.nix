@@ -18,8 +18,6 @@ in
 
   config = lib.mkIf cfg.enable {
     # https://github.com/danymat/neogen
-    plugins.neogen = {
-      enable = true;
-    };
+    plugins.neogen.enable = true;
   };
 }

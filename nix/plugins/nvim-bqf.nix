@@ -4,7 +4,7 @@
   ...
 }:
 let
-  name = "direnv";
+  name = "nvim-bqf";
   cfg = config.nixvim.plugins.${name};
 in
 {
@@ -17,9 +17,7 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    # https://github.com/direnv/direnv.vim
-    plugins.direnv = {
-      enable = true;
-    };
+    # https://github.com/kevinhwang91/nvim-bqf
+    plugins.nvim-bqf.enable = true;
   };
 }
