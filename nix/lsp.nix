@@ -4,19 +4,9 @@ let
   inherit (pkgs.stdenv.hostPlatform) isLinux;
 in
 {
-  # vim.lsp.enable { 'clangd', 'gopls', 'lua_ls', 'nil_ls', 'pylsp', 'tinymist' }
   # vim.diagnostic.config { ... }
   plugins.lsp = {
     enable = true;
-
-    servers = {
-      clangd.enable = true;
-      gopls.enable = true;
-      lua_ls.enable = true;
-      nil_ls.enable = true;
-      pylsp.enable = true;
-      tinymist.enable = true;
-    };
 
     keymaps = {
       lspBuf = {
@@ -133,27 +123,5 @@ in
 
   autoGroups.lsp-attach.clear = true;
 
-  plugins.treesitter.grammarPackages =
-    with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-      c
-      cpp
-      printf
-      go
-      gomod
-      gosum
-      lua
-      luadoc
-      nix
-      python
-    ];
-
-  extraPackages = [
-    pkgs.clang-tools
-    pkgs.gopls
-    pkgs.lua-language-server
-    pkgs.nil
-    pkgs.python313Packages.python-lsp-server
-    pkgs.tinymist
-  ]
-  ++ optionals isLinux [ pkgs.inotify-tools ];
+  extraPackages = optionals isLinux [ pkgs.inotify-tools ];
 }

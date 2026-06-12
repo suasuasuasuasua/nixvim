@@ -52,9 +52,4 @@
     # NOTE: do not lazy load in the future
   };
 
-  extraPackages = [
-    pkgs.gcc
-    pkgs.nodejs
-    pkgs.tree-sitter
-  ];
 }
