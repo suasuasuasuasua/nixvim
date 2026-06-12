@@ -1,6 +1,24 @@
-# A module that automatically imports everything else in the parent folder.
 {
-  imports =
-    with builtins;
-    map (fn: ./${fn}) (filter (fn: fn != "default.nix") (attrNames (readDir ./.)));
+  imports = [
+    ./cmake.nix
+    ./cssls.nix
+    ./docker_compose_language_service.nix
+    ./dockerls.nix
+    ./eslint.nix
+    ./harper_ls.nix
+    ./html.nix
+    ./ltex.nix
+    ./lua_ls.nix
+    ./nginx_language_server.nix
+    ./postgres_lsp.nix
+    ./pyright.nix
+    ./ruff.nix
+    ./rust_analyzer.nix
+    ./sqls.nix
+    ./statix.nix
+    ./tailwindcss.nix
+    ./texlab.nix
+    ./tinymist.nix
+    ./vtsls.nix
+  ];
 }

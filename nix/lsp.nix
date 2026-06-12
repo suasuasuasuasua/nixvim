@@ -137,20 +137,23 @@ in
     with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
       c
       cpp
-      printf # clangd
+      printf
       go
       gomod
-      gosum # gopls
+      gosum
       lua
-      luadoc # lua_ls
-      nix # nil_ls
-      python # pylsp
+      luadoc
+      nix
+      python
     ];
 
   extraPackages = [
-    pkgs.clang-tools # clangd
-    pkgs.go # gopls
-    pkgs.nil # nil_ls
+    pkgs.clang-tools
+    pkgs.gopls
+    pkgs.lua-language-server
+    pkgs.nil
+    pkgs.python313Packages.python-lsp-server
+    pkgs.tinymist
   ]
   ++ optionals isLinux [ pkgs.inotify-tools ];
 }

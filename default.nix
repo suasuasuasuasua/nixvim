@@ -1,12 +1,9 @@
 {
   imports = [
-    ./nixvim.nix
+    ./ftplugin
     ./init.nix
-    ./ftplugin/cpp.nix
     ./lsp
-    ./nix/autocmd.nix
-    ./nix/keymaps.nix
-    ./nix/lsp.nix
-    ./nix/plugins.nix
+    ./nix
+    ./nixvim.nix
   ];
 }
