@@ -7,5 +7,5 @@
       with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [ nix ];
   };
 
-  extraPackages = [ pkgs.nixfmt-rfc-style ];
+  extraPackages = [ pkgs.nixfmt ];
 }

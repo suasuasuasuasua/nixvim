@@ -4,78 +4,45 @@
     enable = true;
 
     settings = {
-      # Oil will take over directory buffers (e.g. `vim .` or `:e src/`)
-      # Set to false if you want some other plugin (e.g. netrw) to open when you edit directories.
       default_file_explorer = true;
 
-      # Id is automatically added at the beginning, and name at the end
-      # See :help oil-columns
-      columns = [
-        "icon"
-        # "permissions"
-        # "size"
-        # "mtime"
-      ];
+      columns = [ "icon" ];
 
-      # Send deleted files to the trash instead of permanently deleting them (:help oil-trash)
-      delete_to_trash = true;
-
-      win_options = {
-        signcolumn = "yes:2"; # for git sign columns
-        winblend = 0;
-      };
-
-      # Configuration for the floating window in oil.open_float
-      float = {
-        # Padding around the floating window
-        padding = 12;
-        # max_width and max_height can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
-        max_width = 0;
-        max_height = 0;
-        border = "rounded";
-        win_options = {
-          signcolumn = "yes:2"; # for git sign columns
-          winblend = 0;
-        };
-        # optionally override the oil buffers window title with custom function: fun(winid: integer): string
-        get_win_title = null;
-        # preview_split: Split direction: "auto", "left", "right", "above", "below".
-        preview_split = "auto";
+      view_options = {
+        is_hidden_file.__raw = ''
+          function(name, bufnr)
+            local dir = require("oil").get_current_dir(bufnr)
+            local is_dotfile = vim.startswith(name, ".") and name ~= ".."
+            if not dir then return is_dotfile end
+            if is_dotfile then
+              return not _oil_git_status[dir].tracked[name]
+            else
+              return _oil_git_status[dir].ignored[name]
+            end
+          end
+        '';
       };
 
       keymaps = {
-        # open the files and navigate to the parent
         "<C-l>" = "actions.select";
         "<C-h>" = {
           __unkeyed-1 = "actions.parent";
           mode = "n";
         };
-
-        # remap horizontal and vertical splits
         "<C-x>" = {
           __unkeyed-1 = "actions.select";
-          opts = {
-            horizontal = true;
-          };
+          opts.horizontal = true;
         };
         "<C-s>" = false;
         "<C-v>" = {
           __unkeyed-1 = "actions.select";
-          opts = {
-            vertical = true;
-          };
+          opts.vertical = true;
         };
-
-        # remap refresh to ctrl-r
         "<C-r>" = "actions.refresh";
-        # copy the current file path
         "y." = "actions.copy_entry_path";
-
-        # scroll the preview window
         "<C-f>" = "actions.preview_scroll_down";
         "<C-b>" = "actions.preview_scroll_up";
 
-        # toggle detail columns
         gd = {
           desc = "Toggle file detail view";
           callback.__raw = ''
@@ -90,7 +57,6 @@
           '';
         };
 
-        # open mini.pick files in the current oil directory
         "<leader>sf" = {
           __unkeyed-1.__raw = ''
             function()
@@ -104,7 +70,6 @@
           desc = "Find files in the current directory";
         };
 
-        # run shell/Ex commands on selected files
         "<leader>:" = {
           callback.__raw = ''function() _oil_run_on_selection({ prefix = "!", prompt = "Shell cmd ({} = file): " }) end'';
           mode = [
@@ -125,14 +90,52 @@
     };
   };
 
-  plugins.oil-git-status = {
-    enable = true;
-  };
+  plugins.oil-git-status.enable = true;
 
   extraConfigLua =
     # lua
     ''
       _oil_detail = false
+
+      _oil_new_git_status = function()
+        local function parse_output(proc)
+          local result = proc:wait()
+          local ret = {}
+          if result.code == 0 then
+            for line in vim.gsplit(result.stdout, "\n", { plain = true, trimempty = true }) do
+              line = line:gsub("/$", "")
+              ret[line] = true
+            end
+          end
+          return ret
+        end
+        return setmetatable({}, {
+          __index = function(self, key)
+            local ignore_proc = vim.system(
+              { "git", "ls-files", "--ignored", "--exclude-standard", "--others", "--directory" },
+              { cwd = key, text = true }
+            )
+            local tracked_proc = vim.system(
+              { "git", "ls-tree", "HEAD", "--name-only" },
+              { cwd = key, text = true }
+            )
+            local ret = {
+              ignored = parse_output(ignore_proc),
+              tracked = parse_output(tracked_proc),
+            }
+            rawset(self, key, ret)
+            return ret
+          end,
+        })
+      end
+      _oil_git_status = _oil_new_git_status()
+
+      local _oil_refresh = require("oil.actions").refresh
+      local _oil_orig_refresh = _oil_refresh.callback
+      _oil_refresh.callback = function(...)
+        _oil_git_status = _oil_new_git_status()
+        _oil_orig_refresh(...)
+      end
 
       _oil_run_on_selection = function(opts)
         opts = opts or {}
@@ -175,17 +178,7 @@
       mode = "n";
       key = "-";
       action = "<CMD>Oil<CR>";
-      options = {
-        desc = "Open parent directory";
-      };
-    }
-    {
-      mode = "n";
-      key = "_";
-      action = "<CMD>Oil --float<CR>";
-      options = {
-        desc = "Open parent directory";
-      };
+      options.desc = "Open parent directory";
     }
   ];
 }

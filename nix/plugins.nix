@@ -14,7 +14,7 @@
     ./plugins/nvim-tmux-navigation.nix
     ./plugins/nvim-treesitter.nix
     ./plugins/nvim-ufo.nix
-    ./plugins/oil.nix
+    # ./plugins/oil.nix
     ./plugins/overseer.nix
     ./plugins/render-markdown.nix
     ./plugins/todo-comments.nix
