@@ -1,41 +1,17 @@
+{ pkgs, ... }:
 {
-  lib,
-  config,
-  pkgs,
-  ...
-}:
-let
-  name = "vtsls";
-  cfg = config.nixvim.lsp.languages.${name};
-in
-{
-  options.nixvim.lsp.languages.${name} = {
-    enable = lib.mkEnableOption "Enable ${name} LSP for neovim";
-  };
-
-  config = lib.mkIf cfg.enable {
-    plugins = {
-      lsp.servers.vtsls = {
-        enable = true;
-        # NOTE: add options as I need
-      };
-
-      conform-nvim.settings.formattersByFt =
-        lib.mkIf config.nixvim.plugins.conform-nvim.enable
-          {
-            javascript = [ "prettierd" ];
-            typescript = [ "prettierd" ];
-          };
-
-      treesitter.grammarPackages =
-        with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-          javascript
-          typescript
-        ];
+  plugins = {
+    lsp.servers.vtsls.enable = true;
+    conform-nvim.settings.formattersByFt = {
+      javascript = [ "prettierd" ];
+      typescript = [ "prettierd" ];
     };
-
-    extraPackages = with pkgs; [
-      prettierd
-    ];
+    treesitter.grammarPackages =
+      with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
+        javascript
+        typescript
+      ];
   };
+
+  extraPackages = [ pkgs.prettierd ];
 }

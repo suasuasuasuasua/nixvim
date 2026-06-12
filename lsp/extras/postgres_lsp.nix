@@ -1,39 +1,11 @@
+{ pkgs, ... }:
 {
-  lib,
-  config,
-  pkgs,
-  ...
-}:
-let
-  name = "postgres_lsp";
-  cfg = config.nixvim.lsp.languages.${name};
-in
-{
-  options.nixvim.lsp.languages.${name} = {
-    enable = lib.mkEnableOption "Enable ${name} LSP for neovim";
+  plugins = {
+    lsp.servers.postgres_lsp.enable = true;
+    conform-nvim.settings.formattersByFt.sql = [ "sqlfluff" ];
+    treesitter.grammarPackages =
+      with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [ sql ];
   };
 
-  config = lib.mkIf cfg.enable {
-    plugins = {
-      lsp.servers.postgres_lsp = {
-        enable = true;
-        # NOTE: add options as I need
-      };
-
-      conform-nvim.settings.formattersByFt =
-        lib.mkIf config.nixvim.plugins.conform-nvim.enable
-          {
-            sql = [ "sqlfluff" ];
-          };
-
-      treesitter.grammarPackages =
-        with pkgs.vimPlugins.nvim-treesitter.builtGrammars; [
-          sql
-        ];
-    };
-
-    extraPackages = with pkgs; [
-      sqlfluff
-    ];
-  };
+  extraPackages = [ pkgs.sqlfluff ];
 }

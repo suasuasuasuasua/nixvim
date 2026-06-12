@@ -1,6 +1,4 @@
-# A module that automatically imports everything else in the parent folder.
+# Extras are opt-in — add a specific file to your imports to enable it.
 {
-  imports =
-    with builtins;
-    map (fn: ./${fn}) (filter (fn: fn != "default.nix") (attrNames (readDir ./.)));
+  imports = [ ];
 }
