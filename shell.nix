@@ -16,10 +16,10 @@ pkgs.mkShellNoCC {
   # define the programs available when running `nix develop`
   # add the packages from the git-hooks list too
   buildInputs = config.pre-commit.settings.enabledPackages;
-  packages = with pkgs; [
-    just
-    nil
-    nixd
-    vim-startuptime
+  packages = [
+    pkgs.just
+    pkgs.nil
+    pkgs.nixd
+    pkgs.vim-startuptime
   ];
 }

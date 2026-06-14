@@ -69,7 +69,7 @@
           nixvim' = nixvim.legacyPackages.${system};
           nixvimModule = {
             inherit pkgs; # or alternatively, set `system`
-            module = import ./config; # import the module directly
+            module = import ./.; # import the module directly
             # You can use `extraSpecialArgs` to pass additional arguments to your module files
             extraSpecialArgs = {
               # inherit (inputs) foo;
@@ -88,9 +88,9 @@
               treefmt = {
                 enable = true;
                 # add the packages so the precommit-hook treefmt can find them
-                settings.formatters = with pkgs; [
-                  nixfmt
-                  prettier
+                settings.formatters = [
+                  pkgs.nixfmt
+                  pkgs.prettier
                 ];
               };
               deadnix.enable = true;
@@ -113,28 +113,7 @@
           };
 
           # Lets you run `nix run .` to start nixvim
-          packages =
-            builtins.foldl'
-              (
-                acc: profile:
-                {
-                  ${profile} = import ./packages/${profile}.nix {
-                    inherit nvim lib;
-                  };
-                }
-                // acc
-              )
-              { }
-              # in order of plugin and configuration complexity
-              [
-                # Disable EVERYTHING
-                "plain"
-                # Disable all configurations (lsps, plugins, etc.)
-                "minimal"
-                # The default configuration has the essential configuration and
-                # a few essential custom plugins
-                "default"
-              ];
+          packages.default = nvim;
 
         };
     };

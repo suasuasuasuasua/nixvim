@@ -34,4 +34,3 @@ jobs:
         run: |
           nix build --option max-jobs 1 \
             --option post-build-hook /post-build-hook \
-            .#default .#minimal .#plain

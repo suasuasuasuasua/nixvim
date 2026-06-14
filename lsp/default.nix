@@ -1,0 +1,26 @@
+{
+  imports = [
+    ./clangd.nix
+    ./cmake.nix
+    ./cssls.nix
+    ./docker_compose_language_service.nix
+    ./dockerls.nix
+    ./eslint.nix
+    ./gopls.nix
+    ./harper_ls.nix
+    ./html.nix
+    ./ltex.nix
+    ./lua_ls.nix
+    ./nginx_language_server.nix
+    ./nil_ls.nix
+    ./postgres_lsp.nix
+    ./rust_analyzer.nix
+    ./sqls.nix
+    ./statix.nix
+    ./tailwindcss.nix
+    ./texlab.nix
+    ./tinymist.nix
+    ./ty.nix
+    ./vtsls.nix
+  ];
+}
