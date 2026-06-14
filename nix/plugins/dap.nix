@@ -64,31 +64,31 @@
     {
       mode = "n";
       key = "<F5>";
-      action.__raw = "function() require('dap').continue() end";
+      action = "<Cmd>DapContinue<CR>";
       options.desc = "Debug: Start/Continue";
     }
     {
       mode = "n";
       key = "<F1>";
-      action.__raw = "function() require('dap').step_into() end";
-      options.desc = "Debug: Step Into";
-    }
-    {
-      mode = "n";
-      key = "<F2>";
-      action.__raw = "function() require('dap').step_over() end";
+      action = "<Cmd>DapStepOver<CR>";
       options.desc = "Debug: Step Over";
     }
     {
       mode = "n";
+      key = "<F2>";
+      action = "<Cmd>DapStepInto<CR>";
+      options.desc = "Debug: Step Into";
+    }
+    {
+      mode = "n";
       key = "<F3>";
-      action.__raw = "function() require('dap').step_out() end";
+      action = "<Cmd>DapStepOut<CR>";
       options.desc = "Debug: Step Out";
     }
     {
       mode = "n";
       key = "<leader>b";
-      action.__raw = "function() require('dap').toggle_breakpoint() end";
+      action = "<Cmd>DapToggleBreakpoint<CR>";
       options.desc = "Debug: Toggle Breakpoint";
     }
     {
@@ -100,8 +100,8 @@
     {
       mode = "n";
       key = "<F7>";
-      action.__raw = "function() require('dapui').toggle() end";
-      options.desc = "Debug: See last session result.";
+      action = "<Cmd>DapShowLastSessionResult<CR>";
+      options.desc = "Debug: Show Last Session Result";
     }
   ];
 

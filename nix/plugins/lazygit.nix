@@ -1,18 +1,18 @@
-{ pkgs, ... }:
 {
-  # https://github.com/kdheepak/lazygit.nvim
-  extraPlugins = [ pkgs.vimPlugins.lazygit-nvim ];
-
-  globals = {
-    lazygit_floating_window_scaling_factor = 0.9;
-    lazygit_config_file_path.__raw = "os.getenv('HOME') .. '/.config/lazygit/config.yml'";
+  plugins.lazygit = {
+    enable = true;
+    settings = {
+      floating_window_scaling_factor = 0.9;
+      use_custom_config_file_path = 1;
+      config_file_path.__raw = "vim.fn.expand '$HOME' .. '/.config/lazygit/config.yml'";
+    };
   };
 
   keymaps = [
     {
       mode = "n";
       key = "<leader>lg";
-      action = "<Cmd>LazyGit<Cr>";
+      action = "<Cmd>LazyGit<CR>";
       options.desc = "Toggle LazyGit";
     }
   ];

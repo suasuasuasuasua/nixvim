@@ -14,13 +14,13 @@
       mode = "n";
       key = "zR";
       action.__raw = "require('ufo').openAllFolds";
-      options.desc = "Open all folds [ufo]";
+      options.desc = "ufo: Open all folds";
     }
     {
       mode = "n";
       key = "zM";
       action.__raw = "require('ufo').closeAllFolds";
-      options.desc = "Close all folds [ufo]";
+      options.desc = "ufo: Close all folds";
     }
   ];
 }

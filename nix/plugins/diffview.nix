@@ -11,13 +11,13 @@
         _diffview_default_branch = "origin/main"
       end
 
-      vim.keymap.set('n', '<Leader>do', '<CMD>DiffviewOpen<CR>', { desc = 'Show Diffview UI' })
-      vim.keymap.set('n', '<Leader>dom', '<CMD>DiffviewOpen ' .. _diffview_default_branch .. '...HEAD<CR>',
-        { desc = 'Show Diffview UI Relative to Main' })
-      vim.keymap.set('n', '<Leader>dh', '<CMD>DiffviewFileHistory<CR>', { desc = 'Show Diffview File History UI' })
-      vim.keymap.set('n', '<Leader>df', '<CMD>DiffviewFileHistory %<CR>',
-        { desc = 'Show Diffview File History UI on current file' })
-      vim.keymap.set('n', '<Leader>dhm', '<CMD>DiffviewFileHistory --range=' .. _diffview_default_branch .. '..HEAD<CR>',
-        { desc = 'Show Diffview File History UI Relative to Main' })
+      vim.keymap.set('n', '<Leader>do', '<Cmd>DiffviewOpen<CR>', { desc = '[D]iff [O]pen' })
+      vim.keymap.set('n', '<Leader>dom', '<Cmd>DiffviewOpen ' .. _diffview_default_branch .. '...HEAD<CR>',
+        { desc = '[D]iff [O]pen against [M]ain' })
+      vim.keymap.set('n', '<Leader>dh', '<Cmd>DiffviewFileHistory<CR>', { desc = '[D]iff file [H]istory' })
+      vim.keymap.set('n', '<Leader>df', '<Cmd>DiffviewFileHistory %<CR>',
+        { desc = '[D]iff current [F]ile history' })
+      vim.keymap.set('n', '<Leader>dhm', '<Cmd>DiffviewFileHistory --range=' .. _diffview_default_branch .. '..HEAD<CR>',
+        { desc = '[D]iff file history [M]ain' })
     '';
 }
