@@ -1,17 +1,11 @@
 {
   # https://nix-community.github.io/nixvim/NeovimOptions/index.html?highlight=globals#globals
   globals = {
-    # Set <space> as the leader key
-    # See `:help mapleader`
     mapleader = " ";
     maplocalleader = " ";
-
-    # Set to true if you have a Nerd Font installed and selected in the terminal
-    have_nerd_font = true; # we _should_ have nerd fonts
+    have_nerd_font = true;
   };
 
-  # [[ Setting options ]]
-  # See `:help vim.opt`
   # https://nix-community.github.io/nixvim/NeovimOptions/index.html?highlight=globals#opts
   opts = {
     autoindent = true;
@@ -79,14 +73,15 @@
     wrap = false;
   };
 
+  colorscheme = "miniautumn";
+
   extraConfigLua =
     # lua
     ''
-      vim.o.undodir = os.getenv('HOME') .. '/.vim/undodir'
+      vim.o.undodir = vim.fn.stdpath 'state' .. '/undo'
+      vim.o.viewdir = vim.fn.stdpath 'state' .. '/view'
     '';
 
-  # The line beneath this is called `modeline`. See `:help modeline`
-  # https://nix-community.github.io/nixvim/NeovimOptions/index.html?highlight=extraplugins#extraconfigluapost
   extraConfigLuaPost =
     # lua
     ''

@@ -9,7 +9,13 @@
       # better around/inside textobjects
       ai = { };
 
-      # key binding hints (replaces which-key)
+      # opinionated basic options/mappings/autocommands
+      basics = { };
+
+      # bracket text objects and motions
+      bracketed = { };
+
+      # key binding hints
       clue = {
         triggers = [
           {
@@ -99,7 +105,7 @@
       # command-line replacement
       cmdline = { };
 
-      # completion (replaces blink-cmp/nvim-cmp)
+      # completion
       completion = {
         delay = {
           completion = 10;
@@ -108,16 +114,56 @@
         };
       };
 
+      # highlight word under cursor
+      cursorword = {
+        delay = 10;
+      };
+
+      # diff signs in sign column (replaces gitsigns)
+      diff = {
+        view = {
+          style = "sign";
+          signs = {
+            add = "+";
+            change = "~";
+            delete = "_";
+          };
+        };
+      };
+
       # extra pickers for mini.pick
       extra = { };
+
+      # git integration (replaces neogit blame/diff keymaps)
+      git = { };
+
+      # highlight patterns in buffers
+      hipatterns = {
+        highlighters = {
+          fixme = {
+            pattern = "FIXME";
+            group = "MiniHipatternsFixme";
+          };
+          hack = {
+            pattern = "HACK";
+            group = "MiniHipatternsHack";
+          };
+          todo = {
+            pattern = "TODO";
+            group = "MiniHipatternsTodo";
+          };
+          note = {
+            pattern = "NOTE";
+            group = "MiniHipatternsNote";
+          };
+          hex_color.__raw = "require('mini.hipatterns').gen_highlighter.hex_color()";
+        };
+      };
 
       # icons (replaces web-devicons)
       icons = { };
 
-      # input (replaces vim.ui.input)
-      # input = { }; # TODO: not here yet
-
-      # indentation scope (replaces indent-blankline)
+      # indentation scope
       indentscope = {
         draw = {
           delay = 10;
@@ -125,20 +171,32 @@
         };
       };
 
+      # input (replaces vim.ui.input)
+      # input = { }; # TODO: not available in nixvim yet
+
+      # enhanced f/F/t/T motions
+      jump = {
+        delay.highlight = 10;
+      };
+
+      # miscellaneous helpers (setup_auto_root called in luaConfig.post)
+      misc = { };
+
+      # move lines/selections
+      move = { };
+
       # notifications
       notify = { };
 
-      # autopairs (replaces nvim-autopairs)
+      # autopairs
       pairs = {
-        modes = {
-          command = true;
-        };
+        modes.command = true;
       };
 
-      # fuzzy finder (replaces telescope)
+      # fuzzy finder
       pick = { };
 
-      # snippets (replaces luasnip)
+      # snippets
       snippets = {
         snippets = [
           {
@@ -147,10 +205,13 @@
         ];
       };
 
-      # statusline (replaces lualine)
+      # split/join code blocks
+      splitjoin = { };
+
+      # statusline
       statusline = { };
 
-      # surround (replaces nvim-surround)
+      # surround
       surround = {
         mappings = {
           add = "ys";
@@ -165,20 +226,26 @@
         search_method = "cover_or_next";
       };
 
-      # trailing whitespace (replaces trim.nvim)
+      # trailing whitespace
       trailspace = { };
+
+      # visit tracking
+      visits = { };
     };
 
     luaConfig.post =
       # lua
       ''
-        -- mini.icons: mock web-devicons and tweak LSP kinds
+        -- mini.icons
         MiniIcons.tweak_lsp_kind()
 
-        -- mini.snippets: start LSP server for snippet completion
+        -- mini.snippets
         MiniSnippets.start_lsp_server()
 
-        -- mini.pick: custom registry pickers
+        -- mini.misc: auto-detect project root
+        MiniMisc.setup_auto_root()
+
+        -- mini.pick: registry picker
         local pick = require('mini.pick')
         pick.registry.registry = function()
           local items = vim.tbl_keys(pick.registry)
@@ -188,20 +255,9 @@
           if chosen_picker_name == nil then return end
           return pick.registry[chosen_picker_name]()
         end
-        pick.registry.files = function(local_opts)
-          local_opts = local_opts or {}
-          local cwd = local_opts.cwd or vim.fn.getcwd()
-          if vim.fn.executable('rg') == 1 then
-            local command = { 'rg', '--files', '--hidden', '--glob', '!.git' }
-            return pick.builtin.cli({ command = command }, { source = { name = 'Files', cwd = cwd } })
-          end
-          return pick.builtin.files(local_opts, { source = { cwd = cwd } })
-        end
 
         -- mini.surround: remap Visual mode surround and line surround
         vim.keymap.del('x', 'ys')
-        vim.keymap.set('x', 'S', [[:<C-u>lua MiniSurround.add('visual')<CR>]], { silent = true })
-        vim.keymap.set('n', 'yss', 'ys_', { remap = true })
 
         -- mini.files: file explorer with git-status filter
         local function parse_git_output(proc)
@@ -277,12 +333,97 @@
       '';
   };
 
-  # friendly-snippets provides a variety of premade snippets for mini.snippets
-  # https://github.com/rafamadriz/friendly-snippets
   plugins.friendly-snippets.enable = true;
 
-  # mini.pick keymaps
   keymaps = [
+    # mini.surround: Visual mode surround and line surround
+    {
+      mode = "x";
+      key = "S";
+      action = ":<C-u>lua MiniSurround.add('visual')<CR>";
+      options.silent = true;
+    }
+    {
+      mode = "n";
+      key = "yss";
+      action = "ys_";
+      options.remap = true;
+    }
+
+    # mini.diff: hunk navigation and reset
+    {
+      mode = "n";
+      key = "]c";
+      action.__raw = ''
+        function()
+          if vim.wo.diff then vim.cmd.normal { ']c', bang = true }
+          else require('mini.diff').goto_hunk 'next'
+          end
+        end
+      '';
+      options.desc = "Jump to next git [c]hange";
+    }
+    {
+      mode = "n";
+      key = "[c";
+      action.__raw = ''
+        function()
+          if vim.wo.diff then vim.cmd.normal { '[c', bang = true }
+          else require('mini.diff').goto_hunk 'prev'
+          end
+        end
+      '';
+      options.desc = "Jump to previous git [c]hange";
+    }
+    {
+      mode = [
+        "n"
+        "v"
+      ];
+      key = "<leader>hr";
+      action = "gH";
+      options = {
+        remap = true;
+        desc = "git [r]eset hunk";
+      };
+    }
+    {
+      mode = "n";
+      key = "<leader>hp";
+      action.__raw = "function() require('mini.diff').toggle_overlay() end";
+      options.desc = "git [p]review hunk (overlay)";
+    }
+    {
+      mode = "n";
+      key = "<leader>tD";
+      action.__raw = "function() require('mini.diff').toggle_overlay() end";
+      options.desc = "[T]oggle git [D]iff overlay";
+    }
+
+    # mini.git: blame and diff keymaps
+    {
+      mode = [
+        "n"
+        "x"
+      ];
+      key = "<leader>hb";
+      action.__raw = "function() MiniGit.show_at_cursor() end";
+      options.desc = "git [b]lame line / show at cursor";
+    }
+    {
+      mode = "n";
+      key = "<leader>hd";
+      action = "<cmd>Git diff --cached -- %<CR>";
+      options.desc = "git [d]iff against index";
+    }
+    {
+      mode = "n";
+      key = "<leader>hD";
+      action = "<cmd>Git diff HEAD -- %<CR>";
+      options.desc = "git [D]iff against last commit";
+    }
+
+    # mini.pick: pickers
     {
       mode = "n";
       key = "<leader>sh";
@@ -298,14 +439,14 @@
     {
       mode = "n";
       key = "<leader>sf";
-      action.__raw = "function() require('mini.pick').registry.files { cwd = vim.fn.getcwd() } end";
+      action.__raw = "function() require('mini.pick').builtin.files { cwd = vim.fn.getcwd() } end";
       options.desc = "[S]earch [F]iles";
     }
     {
       mode = "n";
       key = "<leader>ss";
-      action.__raw = "require('mini.pick').registry.registry";
-      options.desc = "[S]earch [S]elect Registry";
+      action.__raw = "function() MiniExtra.pickers.visit_paths() end";
+      options.desc = "[S]earch Recent Files (by visit frequency)";
     }
     {
       mode = "n";
@@ -328,8 +469,8 @@
     {
       mode = "n";
       key = "<leader>s.";
-      action.__raw = "require('mini.pick').registry.oldfiles";
-      options.desc = ''[S]earch Recent Files ("." for repeat)'';
+      action.__raw = "require('mini.pick').registry.registry";
+      options.desc = "[S]earch [S]elect Registry";
     }
     {
       mode = "n";
