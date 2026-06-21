@@ -1,11 +1,11 @@
 require('mini.ai').setup()
 require('mini.bracketed').setup()
 require('mini.jump').setup {
-  delay = { highlight = 10 }
+  delay = { highlight = 10 },
 }
 require('mini.move').setup()
 require('mini.pairs').setup {
-  modes = { command = true }
+  modes = { command = true },
 }
 require('mini.splitjoin').setup()
 require('mini.trailspace').setup()

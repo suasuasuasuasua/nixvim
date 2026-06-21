@@ -13,14 +13,8 @@ end
 local function new_git_status()
   return setmetatable({}, {
     __index = function(self, key)
-      local ignore_proc = vim.system(
-        { 'git', 'ls-files', '--ignored', '--exclude-standard', '--others', '--directory' },
-        { cwd = key, text = true }
-      )
-      local tracked_proc = vim.system(
-        { 'git', 'ls-tree', 'HEAD', '--name-only' },
-        { cwd = key, text = true }
-      )
+      local ignore_proc = vim.system({ 'git', 'ls-files', '--ignored', '--exclude-standard', '--others', '--directory' }, { cwd = key, text = true })
+      local tracked_proc = vim.system({ 'git', 'ls-tree', 'HEAD', '--name-only' }, { cwd = key, text = true })
       local ret = {
         ignored = parse_git_output(ignore_proc),
         tracked = parse_git_output(tracked_proc),
@@ -52,13 +46,11 @@ require('mini.files').setup {
 local toggle_dotfiles = function()
   show_all = not show_all
   local new_filter = show_all and filter_show or filter_git
-  MiniFiles.refresh({ content = { filter = new_filter } })
+  MiniFiles.refresh { content = { filter = new_filter } }
 end
 vim.api.nvim_create_autocmd('User', {
   pattern = 'MiniFilesBufferCreate',
-  callback = function(args)
-    vim.keymap.set('n', 'g.', toggle_dotfiles, { buffer = args.data.buf_id })
-  end,
+  callback = function(args) vim.keymap.set('n', 'g.', toggle_dotfiles, { buffer = args.data.buf_id }) end,
 })
 vim.api.nvim_create_autocmd('User', {
   pattern = 'MiniFilesExplorerOpen',

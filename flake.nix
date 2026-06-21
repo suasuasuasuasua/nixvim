@@ -32,7 +32,8 @@
       luaPath = ./.;
       forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
       extra_pkg_config = {
-        allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "obsidian" ];
+        allowUnfreePredicate =
+          pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "obsidian" ];
       };
 
       dependencyOverlays = [
@@ -157,7 +158,12 @@
       system:
       let
         nixCatsBuilder = utils.baseBuilder luaPath {
-          inherit nixpkgs system dependencyOverlays extra_pkg_config;
+          inherit
+            nixpkgs
+            system
+            dependencyOverlays
+            extra_pkg_config
+            ;
         } categoryDefinitions packageDefinitions;
         defaultPackage = nixCatsBuilder defaultPackageName;
         pkgs = import nixpkgs { inherit system; };
@@ -170,6 +176,7 @@
           runtimeInputs = with pkgs; [
             treefmt
             nixfmt
+            prettier
             stylua
           ];
           text = "exec treefmt \"$@\"";

@@ -4,10 +4,10 @@ miniclue.setup {
     -- Leader triggers
     { mode = { 'n', 'x' }, keys = '<Leader>' },
     -- `[` and `]` keys
-    { mode = 'n',          keys = '[' },
-    { mode = 'n',          keys = ']' },
+    { mode = 'n', keys = '[' },
+    { mode = 'n', keys = ']' },
     -- Built-in completion
-    { mode = 'i',          keys = '<C-x>' },
+    { mode = 'i', keys = '<C-x>' },
     -- `g` key
     { mode = { 'n', 'x' }, keys = 'g' },
     -- Marks
@@ -17,7 +17,7 @@ miniclue.setup {
     { mode = { 'n', 'x' }, keys = '"' },
     { mode = { 'i', 'c' }, keys = '<C-r>' },
     -- Window commands
-    { mode = 'n',          keys = '<C-w>' },
+    { mode = 'n', keys = '<C-w>' },
     -- `z` key
     { mode = { 'n', 'x' }, keys = 'z' },
   },

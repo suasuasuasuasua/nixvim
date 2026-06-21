@@ -6,8 +6,7 @@ vim.keymap.set('n', '<F1>', function() require('dap').step_into() end, { desc = 
 vim.keymap.set('n', '<F2>', function() require('dap').step_over() end, { desc = 'Debug: Step Over' })
 vim.keymap.set('n', '<F3>', function() require('dap').step_out() end, { desc = 'Debug: Step Out' })
 vim.keymap.set('n', '<leader>b', function() require('dap').toggle_breakpoint() end, { desc = 'Debug: Toggle Breakpoint' })
-vim.keymap.set('n', '<leader>B', function() require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ') end,
-  { desc = 'Debug: Set Breakpoint' })
+vim.keymap.set('n', '<leader>B', function() require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, { desc = 'Debug: Set Breakpoint' })
 vim.keymap.set('n', '<F7>', function() require('dapui').toggle() end, { desc = 'Debug: See last session result.' })
 
 local dap = require 'dap'
@@ -32,9 +31,8 @@ dapui.setup {
 
 vim.api.nvim_set_hl(0, 'DapBreak', { fg = '#e51400' })
 vim.api.nvim_set_hl(0, 'DapStop', { fg = '#ffcc00' })
-local breakpoint_icons = vim.g.have_nerd_font
-    and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
-    or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
+local breakpoint_icons = vim.g.have_nerd_font and { Breakpoint = '', BreakpointCondition = '', BreakpointRejected = '', LogPoint = '', Stopped = '' }
+  or { Breakpoint = '●', BreakpointCondition = '⊜', BreakpointRejected = '⊘', LogPoint = '◆', Stopped = '⭔' }
 for type, icon in pairs(breakpoint_icons) do
   local tp = 'Dap' .. type
   local hl = (type == 'Stopped') and 'DapStop' or 'DapBreak'
@@ -51,7 +49,7 @@ require('dap-go').setup {
   },
 }
 
-require("dap-python").setup()
+require('dap-python').setup()
 
 -- codelldb adapter: provided by pkgs.lldb (lldb-dap) or a vscode-lldb derivation
 -- TODO: wire up the exact path if vim.fn.exepath('codelldb') is empty
@@ -59,7 +57,7 @@ dap.adapters.codelldb = {
   type = 'server',
   port = '${port}',
   executable = {
-    command = vim.fn.exepath('codelldb'),
+    command = vim.fn.exepath 'codelldb',
     args = { '--port', '${port}' },
   },
 }
@@ -67,76 +65,70 @@ dap.adapters.codelldb = {
 dap.configurations = {
   python = {
     {
-      name = "Python Debugger: Current File",
-      type = "debugpy",
-      request = "launch",
-      program = "${file}",
+      name = 'Python Debugger: Current File',
+      type = 'debugpy',
+      request = 'launch',
+      program = '${file}',
       args = {},
-      console = "integratedTerminal"
+      console = 'integratedTerminal',
     },
   },
   cpp = {
     {
-      name = "(gdb) Launch",
-      type = "cppdbg",
-      request = "launch",
+      name = '(gdb) Launch',
+      type = 'cppdbg',
+      request = 'launch',
       program = function()
         local result = nil
-        require("mini.pick").start {
+        require('mini.pick').start {
           source = {
-            name = "Select executable",
+            name = 'Select executable',
             cwd = vim.fn.getcwd(),
-            items = vim.fn.systemlist({ "fd", "--type", "x", "--no-ignore", "--absolute-path" }),
-            choose = function(item)
-              result = item
-            end,
+            items = vim.fn.systemlist { 'fd', '--type', 'x', '--no-ignore', '--absolute-path' },
+            choose = function(item) result = item end,
           },
         }
         return result
       end,
       args = {},
-      cwd = "${fileDirname}",
+      cwd = '${fileDirname}',
       environment = {},
       externalConsole = false,
-      MIMode = "gdb",
+      MIMode = 'gdb',
       setupCommands = {
-        { text = "set follow-fork-mode child", ignoreFailures = true },
+        { text = 'set follow-fork-mode child', ignoreFailures = true },
       },
     },
     {
-      name = "(lldb) Launch",
-      type = "codelldb",
-      request = "launch",
+      name = '(lldb) Launch',
+      type = 'codelldb',
+      request = 'launch',
       program = function()
         local result = nil
-        require("mini.pick").start {
+        require('mini.pick').start {
           source = {
-            name = "Select executable",
+            name = 'Select executable',
             cwd = vim.fn.getcwd(),
-            items = vim.fn.systemlist({ "fd", "--type", "x", "--no-ignore", "--absolute-path" }),
-            choose = function(item)
-              result = item
-            end,
+            items = vim.fn.systemlist { 'fd', '--type', 'x', '--no-ignore', '--absolute-path' },
+            choose = function(item) result = item end,
           },
         }
         return result
       end,
       args = {},
-      cwd = "${fileDirname}",
+      cwd = '${fileDirname}',
       stopOnEntry = false,
     },
     {
-      name = "Attach to Python (GDB)",
-      type = "cppdbg",
-      request = "attach",
-      processId = function()
-        return require('dap.utils').pick_process({ filter = "python" })
-      end,
-      program = "python",
-      MIMode = "gdb",
+      name = 'Attach to Python (GDB)',
+      type = 'cppdbg',
+      request = 'attach',
+      processId = function() return require('dap.utils').pick_process { filter = 'python' } end,
+      program = 'python',
+      MIMode = 'gdb',
       setupCommands = {
-        { text = "set follow-fork-mode child", ignoreFailures = true },
+        { text = 'set follow-fork-mode child', ignoreFailures = true },
       },
-    }
-  }
+    },
+  },
 }
