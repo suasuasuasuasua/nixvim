@@ -1,0 +1,21 @@
+require 'plugins.builtin'
+require 'plugins.conform'
+require 'plugins.dap'
+require 'plugins.diffview'
+require 'plugins.grug-far'
+require 'plugins.guess-indent'
+require 'plugins.lazygit'
+-- mason omitted: Nix handles tool installation
+require 'plugins.mini'
+require 'plugins.neogen'
+require 'plugins.nvim-bqf'
+require 'plugins.nvim-tmux-navigation'
+require 'plugins.nvim-treesitter'
+require 'plugins.nvim-ufo'
+require 'plugins.overseer'
+require 'plugins.render-markdown'
+require 'plugins.tokyonight-night'
+
+-- optional
+-- require 'plugins.neorg'
+-- require 'plugins.oil'

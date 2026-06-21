@@ -1,120 +1,170 @@
 {
-  description = "suasuasuasuasua's nixvim config";
+  description = "suasuasuasuasua's neovim config (nixCats)";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
-    nixvim.url = "github:nix-community/nixvim/nixos-26.05";
-
+    nixCats.url = "github:BirdeeHub/nixCats-nvim";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    git-hooks-nix.url = "github:cachix/git-hooks.nix";
+
+    # diffview-plus.nvim (fork of sindrets/diffview.nvim; not yet in nixpkgs)
+    "plugins-diffview-plus" = {
+      url = "github:dlyongemallo/diffview-plus.nvim";
+      flake = false;
+    };
+
+    # nvim-tmux-navigation (alexghergh's version; not in nixpkgs)
+    "plugins-nvim-tmux-navigation" = {
+      url = "github:alexghergh/nvim-tmux-navigation";
+      flake = false;
+    };
   };
 
   outputs =
     {
       self,
       nixpkgs,
-      nixvim,
+      nixCats,
       flake-parts,
       ...
     }@inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [ inputs.git-hooks-nix.flakeModule ];
-
-      systems = [
-        "x86_64-linux"
-        "aarch64-linux"
-        "aarch64-darwin"
-      ];
-
-      flake = {
-        hydraJobs = {
-          inherit (self) packages;
-        };
-        meta = {
-          description = "My nixvim configuration";
-          homepage = "https://github.com/suasuasuasuasua/nixvim";
-          license = with nixpkgs.lib.licenses; [
-            mit
-          ];
-          maintainers = [
-            {
-              name = "Justin Hoang";
-              email = "justinhoang@sua.dev";
-              github = "suasuasuasuasua";
-              githubId = 72476123;
-            }
-          ];
-        };
+    let
+      inherit (nixCats) utils;
+      luaPath = ./.;
+      forEachSystem = utils.eachSystem nixpkgs.lib.platforms.all;
+      extra_pkg_config = {
+        allowUnfreePredicate = pkg: builtins.elem (nixpkgs.lib.getName pkg) [ "obsidian" ];
       };
 
-      # https://github.com/nix-community/nixvim/blob/1c5c991fda4519db56c30c9d75ba29ba7097af83/templates/simple/flake.nix
-      perSystem =
+      dependencyOverlays = [
+        # makes pkgs.neovimPlugins.<name> available for non-nixpkgs inputs
+        (utils.standardPluginOverlay inputs)
+      ];
+
+      categoryDefinitions =
         {
-          lib,
-          config,
-          system,
+          pkgs,
+          settings,
+          categories,
+          extra,
+          name,
           ...
-        }:
-        let
-          pkgs = import nixpkgs {
-            inherit system;
-            config.allowUnfreePredicate =
-              pkg:
-              builtins.elem (lib.getName pkg) [
-                "obsidian"
-              ];
-          };
-
-          nixvimLib = nixvim.lib.${system};
-          nixvim' = nixvim.legacyPackages.${system};
-          nixvimModule = {
-            inherit pkgs; # or alternatively, set `system`
-            module = import ./.; # import the module directly
-            # You can use `extraSpecialArgs` to pass additional arguments to your module files
-            extraSpecialArgs = {
-              # inherit (inputs) foo;
-            };
-          };
-          nvim = nixvim'.makeNixvimWithModule nixvimModule;
-        in
+        }@packageDef:
         {
-          devShells.default = import ./shell.nix {
-            inherit pkgs config;
+          # Tools placed on $PATH inside the nvim wrapper (replaces mason)
+          lspsAndRuntimeDeps = {
+            general = with pkgs; [
+              ripgrep
+              fd
+              stylua
+            ];
+            c = with pkgs; [
+              clang-tools # provides clangd
+            ];
+            go = with pkgs; [
+              gopls
+              gotools
+              go-tools
+            ];
+            lua = with pkgs; [ lua-language-server ];
+            nix = with pkgs; [ nil ];
+            python = with pkgs; [ python3Packages.python-lsp-server ];
+            typst = with pkgs; [ tinymist ];
+            dap = with pkgs; [
+              delve # Go debugger
+              lldb # provides lldb-dap for C/C++; wire up codelldb separately if needed
+              python3Packages.debugpy
+            ];
           };
 
-          # enable treefmt as the formatter
-          pre-commit.settings = {
-            hooks = {
-              treefmt = {
-                enable = true;
-                # add the packages so the precommit-hook treefmt can find them
-                settings.formatters = [
-                  pkgs.nixfmt
-                  pkgs.prettier
-                ];
-              };
-              deadnix.enable = true;
-              flake-checker.enable = false;
-              statix.enable = true;
-              commitizen.enable = true;
-              ripsecrets.enable = true;
-              check-added-large-files.enable = true;
-              check-merge-conflicts.enable = true;
-              end-of-file-fixer.enable = true;
-              trim-trailing-whitespace.enable = true;
-            };
-            package = pkgs.prek;
+          # Plugins loaded at startup
+          startupPlugins = {
+            general = with pkgs.vimPlugins; [
+              mini-nvim
+              friendly-snippets
+              conform-nvim
+              # treesitter with a base set of grammars; extend as needed
+              (nvim-treesitter.withPlugins (
+                p: with p; [
+                  bash
+                  c
+                  diff
+                  html
+                  lua
+                  luadoc
+                  markdown
+                  markdown-inline
+                  query
+                  vim
+                  vimdoc
+                ]
+              ))
+              grug-far-nvim
+              guess-indent-nvim
+              lazygit-nvim
+              neogen
+              nvim-bqf
+              pkgs.neovimPlugins.nvim-tmux-navigation
+              nvim-ufo
+              promise-async
+              overseer-nvim
+              render-markdown-nvim
+              tokyonight-nvim
+              pkgs.neovimPlugins.diffview-plus
+            ];
+
+            dap = with pkgs.vimPlugins; [
+              nvim-dap
+              nvim-dap-ui
+              nvim-nio
+              nvim-dap-go
+              nvim-dap-python
+            ];
+
+            # optional — enable per packageDefinitions
+            neorg = with pkgs.vimPlugins; [ neorg ];
+            oil = with pkgs.vimPlugins; [ oil-nvim ];
           };
-          formatter = pkgs.treefmt;
-
-          checks = {
-            # Run `nix flake check .` to verify that your config is not broken
-            default = nixvimLib.check.mkTestDerivationFromNixvimModule nixvimModule;
-          };
-
-          # Lets you run `nix run .` to start nixvim
-          packages.default = nvim;
-
         };
-    };
+
+      packageDefinitions = {
+        nvim =
+          { pkgs, name, ... }:
+          {
+            settings = {
+              wrapRc = true; # lua config is baked into the nix store
+              aliases = [ "vim" ];
+            };
+            categories = {
+              general = true;
+              c = true;
+              go = true;
+              lua = true;
+              nix = true;
+              python = true;
+              typst = true;
+              dap = true;
+              # opt-in
+              neorg = false;
+              oil = false;
+            };
+          };
+      };
+
+      defaultPackageName = "nvim";
+    in
+
+    forEachSystem (
+      system:
+      let
+        nixCatsBuilder = utils.baseBuilder luaPath {
+          inherit nixpkgs system dependencyOverlays extra_pkg_config;
+        } categoryDefinitions packageDefinitions;
+        defaultPackage = nixCatsBuilder defaultPackageName;
+        pkgs = import nixpkgs { inherit system; };
+      in
+      {
+        packages = utils.mkAllWithDefault defaultPackage;
+        devShells.default = pkgs.mkShell { packages = [ defaultPackage ]; };
+      }
+    );
 }
