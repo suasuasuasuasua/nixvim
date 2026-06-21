@@ -172,7 +172,7 @@
       };
 
       # input (replaces vim.ui.input)
-      # input = { }; # TODO: not available in nixvim yet
+      # input = { };
 
       # enhanced f/F/t/T motions
       jump = {
@@ -407,8 +407,17 @@
         "x"
       ];
       key = "<leader>hb";
-      action.__raw = "function() MiniGit.show_at_cursor() end";
+      action = "<cmd>vert Git blame -- %<CR>";
       options.desc = "git [b]lame line / show at cursor";
+    }
+    {
+      mode = [
+        "n"
+        "x"
+      ];
+      key = "<leader>hs";
+      action = "<cmd>lua MiniGit.show_at_cursor()<CR>";
+      options.desc = "Show at cursor";
     }
     {
       mode = "n";
