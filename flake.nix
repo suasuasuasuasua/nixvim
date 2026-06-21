@@ -165,6 +165,15 @@
       {
         packages = utils.mkAllWithDefault defaultPackage;
         devShells.default = pkgs.mkShell { packages = [ defaultPackage ]; };
+        formatter = pkgs.writeShellApplication {
+          name = "treefmt";
+          runtimeInputs = with pkgs; [
+            treefmt
+            nixfmt
+            stylua
+          ];
+          text = "exec treefmt \"$@\"";
+        };
       }
     );
 }

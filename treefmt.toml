@@ -59,6 +59,12 @@ excludes = []
 priority = 0
 
 
+[formatter.stylua]
+command = "stylua"
+includes = ["*.lua"]
+excludes = []
+priority = 0
+
 [formatter.nixfmt]
 # Command to execute
 command = "nixfmt"
